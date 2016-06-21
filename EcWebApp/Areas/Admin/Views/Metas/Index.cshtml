@@ -1,0 +1,108 @@
+﻿@model IEnumerable<EcWebApp.Models.MetaInfo>
+
+@{
+    ViewBag.Title = "Metas";
+    ViewBag.SubTitle = "Listagem";
+}
+
+@section header {
+    <link href="~/Content/datatables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+}
+
+<div class="row">
+    <div class="col-md-12">
+        @Html.ActionLink("Cadastrar Novo Item", "Create")
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-body">
+                <table id="tblMetas" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width: 10px"></th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Mes)
+                                /
+                                @Html.DisplayNameFor(model => model.Ano)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ValorMeta)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ValorDesafio)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="@Url.Action("Delete", new { id = item.IdMeta })">
+                                        <i class="fa fa-remove text-red"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Edit", new { id = item.IdMeta })">
+                                        @Html.DisplayFor(modelItem => item.Mes)
+                                        /
+                                        @Html.DisplayFor(modelItem => item.Ano)
+                                    </a>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ValorMeta)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ValorDesafio)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/datatables")
+    <!-- page script -->
+    <script>
+        $(function () {
+            $('#tblMetas').DataTable({
+                "responsive": true,
+                "paging": true,
+                "lengthChange": false,
+                "searching": true,
+                "ordering": false,
+                "info": true,
+                "autoWidth": false,
+                "language": {
+                    "sEmptyTable": "Nenhum registro encontrado",
+                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "_MENU_ resultados por página",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "sSearch": "Pesquisar",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    }
+                }
+            });
+        });
+    </script>
+}

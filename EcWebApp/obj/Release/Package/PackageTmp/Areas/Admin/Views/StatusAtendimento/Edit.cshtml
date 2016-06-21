@@ -1,0 +1,81 @@
+﻿@model EcWebApp.Models.StatusAtendimentoInfo
+
+@{
+    ViewBag.Title = "Status de Atendimento";
+    ViewBag.SubTitle = "Edição";
+}
+
+@section header {
+    <link rel="stylesheet" href="~/Content/iCheck/square/blue.css" />
+}
+
+<!-- form start -->
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model=> model.IdStatus)
+
+    <div class="box">
+        <div class="box-body">
+            <div class="form">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "control-label" })
+
+                            @Html.EditorFor(model => model.Descricao, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <span></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.TipoStatus, htmlAttributes: new { @class = "control-label" })
+                            @Html.EnumDropDownListFor(model => model.TipoStatus, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.TipoStatus, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <span></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.EditorFor(model => model.Ativo, new { htmlAttributes = new { @class = "square" } })
+                    &nbsp;
+                    @Html.LabelFor(model => model.Ativo, htmlAttributes: new { @class = "control-label" })
+                </div>
+
+                <div class="form-group">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                </div>
+
+            </div> <!-- form -->
+        </div><!-- box-body -->
+        <div class="box-footer">
+            <input type="submit" value="Salvar" class="btn btn-primary" />
+            @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
+        </div>
+    </div>
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <!-- page script -->
+    <script>
+        $(function () {
+            $('input[type="checkbox"].square').iCheck({ checkboxClass: 'icheckbox_square-blue' });
+
+            var msg = "@ViewBag.MsgErro";
+            if (msg != "OK" && msg != "") {
+                bootbox.alert(msg);
+            }
+        });
+    </script>
+}

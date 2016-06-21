@@ -1,0 +1,335 @@
+﻿@model EcWebApp.Models.ClienteInfo
+
+@{
+    ViewBag.Title = "Clientes";
+    ViewBag.SubTitle = "Inclusão";
+}
+
+@section header {
+    <link rel="stylesheet" href="~/Content/iCheck/square/blue.css" />
+}
+
+<!-- form start -->
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-lg-12 text-danger">
+            @Html.ValidationSummary()
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-8">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Dados Cadastrais</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NomeCliente, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.NomeCliente, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nome Completo" } })
+                        @Html.ValidationMessageFor(model => model.NomeCliente, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.CPFCNPJ, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.CPFCNPJ, new { htmlAttributes = new { @class = "form-control", @placeholder = "CPF/CNPJ" } })
+                            @Html.ValidationMessageFor(model => model.CPFCNPJ, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.Documento, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Documento, new { htmlAttributes = new { @class = "form-control", @placeholder = "RG / IE" } })
+                            @Html.ValidationMessageFor(model => model.Documento, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.DataNascimento, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.DataNascimento, new { htmlAttributes = new { @class = "form-control", @placeholder = "Data de Nascimento" } })
+                            @Html.ValidationMessageFor(model => model.DataNascimento, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <span class="col-md-12">&nbsp;</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.Telefone01, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Telefone01, new { htmlAttributes = new { @class = "form-control", @placeholder = "Telefone" } })
+                            @Html.ValidationMessageFor(model => model.Telefone01, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.Telefone02, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Telefone02, new { htmlAttributes = new { @class = "form-control", @placeholder = "Telefone" } })
+                            @Html.ValidationMessageFor(model => model.Telefone02, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.EmailCliente, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.EmailCliente, new { htmlAttributes = new { @class = "form-control", @placeholder = "E-mail" } })
+                            @Html.ValidationMessageFor(model => model.EmailCliente, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <span class="col-md-12">&nbsp;</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.Profissao, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Profissao, new { htmlAttributes = new { @class = "form-control", @placeholder = "Profissão" } })
+                            @Html.ValidationMessageFor(model => model.Profissao, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-8">
+                            @Html.LabelFor(model => model.Empreendimento, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Empreendimento, new { htmlAttributes = new { @class = "form-control", @placeholder = "Empreendimento" } })
+                            @Html.ValidationMessageFor(model => model.Empreendimento, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+
+            <div id="boxEndAtual" class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Endereço Atual</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body" style="display: block;">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Enderecos[0].Endereco, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.Enderecos[0].Endereco, new { htmlAttributes = new { @class = "form-control", @placeholder = "Endereço" } })
+                        @Html.ValidationMessageFor(model => model.Enderecos[0].Endereco, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.Enderecos[0].Complemento, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Enderecos[0].Complemento, new { htmlAttributes = new { @class = "form-control", @placeholder = "Complemento" } })
+                            @Html.ValidationMessageFor(model => model.Enderecos[0].Complemento, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-8">
+                            @Html.LabelFor(model => model.Enderecos[0].Bairro, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Enderecos[0].Bairro, new { htmlAttributes = new { @class = "form-control", @placeholder = "Bairro" } })
+                            @Html.ValidationMessageFor(model => model.Enderecos[0].Bairro, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <span class="col-md-12">
+                            @Html.HiddenFor(model => model.Enderecos[0].IdEndereco)
+                            @Html.HiddenFor(model => model.Enderecos[0].IdCliente)
+                            @Html.HiddenFor(model => model.Enderecos[0].TipoEndereco)
+                        </span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.LabelFor(model => model.Enderecos[0].Cidade, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Enderecos[0].Cidade, new { htmlAttributes = new { @class = "form-control", @placeholder = "Cidade" } })
+                            @Html.ValidationMessageFor(model => model.Enderecos[0].Cidade, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-2">
+                            @Html.LabelFor(model => model.Enderecos[0].Estado, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Enderecos[0].Estado, new { htmlAttributes = new { @class = "form-control", @placeholder = "Estado" } })
+                            @Html.ValidationMessageFor(model => model.Enderecos[0].Estado, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.Enderecos[0].CEP, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Enderecos[0].CEP, new { htmlAttributes = new { @class = "form-control", @placeholder = "CEP" } })
+                            @Html.ValidationMessageFor(model => model.Enderecos[0].CEP, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div><!-- /.box-body -->
+                <div class="box-footer">
+                    <div class="form-group">
+                        @Html.EditorFor(model => model.EnderecosIguais, new { htmlAttributes = new { @class = "square" } })
+                        &nbsp;
+                        <label class="control-label">Endereço atual é o endereço de entrega.</label>
+                    </div>
+                </div><!-- /.box-footer -->
+            </div><!-- /.box -->
+
+            <div id="boxEndEntrega" class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Endereço de Entrega</h3>
+                    <div class="box-tools pull-right">
+                        <button id="btnEndEntrega" type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body" style="display: block;">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Enderecos[1].Endereco, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.Enderecos[1].Endereco, new { htmlAttributes = new { @class = "form-control", @placeholder = "Endereço" } })
+                        @Html.ValidationMessageFor(model => model.Enderecos[1].Endereco, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.Enderecos[1].Complemento, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Enderecos[1].Complemento, new { htmlAttributes = new { @class = "form-control", @placeholder = "Complemento" } })
+                            @Html.ValidationMessageFor(model => model.Enderecos[1].Complemento, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-8">
+                            @Html.LabelFor(model => model.Enderecos[1].Bairro, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Enderecos[1].Bairro, new { htmlAttributes = new { @class = "form-control", @placeholder = "Bairro" } })
+                            @Html.ValidationMessageFor(model => model.Enderecos[1].Bairro, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <span class="col-md-12">
+                            @Html.HiddenFor(model => model.Enderecos[1].IdEndereco)
+                            @Html.HiddenFor(model => model.Enderecos[1].IdCliente)
+                            @Html.HiddenFor(model => model.Enderecos[1].TipoEndereco)
+                        </span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.LabelFor(model => model.Enderecos[1].Cidade, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Enderecos[1].Cidade, new { htmlAttributes = new { @class = "form-control", @placeholder = "Cidade" } })
+                            @Html.ValidationMessageFor(model => model.Enderecos[1].Cidade, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-2">
+                            @Html.LabelFor(model => model.Enderecos[1].Estado, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Enderecos[1].Estado, new { htmlAttributes = new { @class = "form-control", @placeholder = "Estado" } })
+                            @Html.ValidationMessageFor(model => model.Enderecos[1].Estado, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.Enderecos[1].CEP, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Enderecos[1].CEP, new { htmlAttributes = new { @class = "form-control", @placeholder = "CEP" } })
+                            @Html.ValidationMessageFor(model => model.Enderecos[1].CEP, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div><!--/.col (left) -->
+        <!-- right column -->
+        <div class="col-md-4">
+            <!-- Proposta -->
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Proposta</h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                <div class="box-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.IdVendedor, htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownList("IdVendedor", null, "Selecione..", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.IdVendedor, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ValorEstimadoProjeto, htmlAttributes: new { @class = "control-label" })
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <b>R$</b>
+                            </div>
+                            @Html.EditorFor(model => model.ValorEstimadoProjeto, new { htmlAttributes = new { @class = "form-control", @placeholder = "Valor do Projeto" } })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.ValorEstimadoProjeto, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PrazoEntrega, htmlAttributes: new { @class = "control-label" })
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            @Html.EditorFor(model => model.PrazoEntrega, new { htmlAttributes = new { @class = "form-control", @placeholder = "Prazo de Entrega" } })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.PrazoEntrega, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Interesse, htmlAttributes: new { @class = "control-label" })
+                        @Html.EnumDropDownListFor(model => model.Interesse, "Selecione..", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Interesse, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.IdStatus, htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownList("IdStatus", null, "Selecione..", htmlAttributes: new { @class = "form-control", @placeholder = "Selecione.." })
+                        @Html.ValidationMessageFor(model => model.IdStatus, "", new { @class = "text-danger" })
+                    </div>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+            <!-- Procedência -->
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Procedência</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Procedencia, htmlAttributes: new { @class = "control-label" })
+                        @Html.EnumDropDownListFor(model => model.Procedencia, "Selecione..", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Procedencia, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.OutraProcedencia, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.OutraProcedencia, new { htmlAttributes = new { @class = "form-control", @placeholder = "" } })
+                        @Html.ValidationMessageFor(model => model.OutraProcedencia, "", new { @class = "text-danger" })
+                    </div>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+            <div class="box box-default">
+                <div class="box-body">
+                    @Html.LabelFor(model => model.DataCadastro, htmlAttributes: new { @class = "control-label" })
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.EditorFor(model => model.DataCadastro, new { htmlAttributes = new { @class = "form-control", @placeholder = "Data do Cadastro" } })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.DataCadastro, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div><!--/.col (right) -->
+    </div>   <!-- /.row -->
+    <div class="row">
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/input-mask/jquery.inputmask.js"></script>
+    <script src="~/Scripts/input-mask/jquery.inputmask.numeric.extensions.js"></script>
+    <!-- page script -->
+    <script>
+        $(function () {
+            $("#boxEndAtual").activateBox();
+            $("#boxEndEntrega").activateBox();
+            $("#btnEndEntrega").click();
+
+            $('input[type="checkbox"].square').iCheck({ checkboxClass: 'icheckbox_square-blue' });
+            $("#DataNascimento").datetimepicker({
+                locale: 'pt-BR',
+                format: 'L'
+            });
+
+            $("#DataCadastro").datetimepicker({
+                locale: 'pt-BR',
+                format: 'L'
+            });
+
+            $("#PrazoEntrega").datetimepicker({
+                locale: 'pt-BR',
+                format: 'L'
+            });
+
+            $("#Telefone01").inputmask("(99) 9999[9]-9999");
+            $("#Telefone02").inputmask("(99) 9999[9]-9999");
+            $("#Enderecos_0__CEP").inputmask("99999-999");
+            $("#Enderecos_1__CEP").inputmask("99999-999");
+
+            var msg = "@ViewBag.MsgErro";
+            if (msg != "") {
+                if (msg != "OK") {
+                    bootbox.alert(msg);
+                } else {
+                    bootbox.alert("Registro salvo com sucesso");
+                }
+            }
+        });
+    </script>
+}

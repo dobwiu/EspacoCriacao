@@ -1,0 +1,178 @@
+﻿@model EcWebApp.Models.ClienteInfo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ClienteInfo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Vendedor.NomeUsuario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vendedor.NomeUsuario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NomeCliente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomeCliente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailCliente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailCliente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefone01)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Telefone01)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefone02)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Telefone02)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataNascimento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataNascimento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CPFCNPJ)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CPFCNPJ)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Documento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Documento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Interesse)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Interesse)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StatusPlanta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StatusPlanta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataApresentacao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataApresentacao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataMedicao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataMedicao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataUltimoContato)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataUltimoContato)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataProximoContato)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataProximoContato)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Comentarios)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Comentarios)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Procedencia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Procedencia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OutraProcedencia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OutraProcedencia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ValorEstimadoProjeto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ValorEstimadoProjeto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataCadastro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataCadastro)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdCliente }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

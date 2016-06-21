@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="EspacoCriacao" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\dobwi\\documents\\visual\ studio\ 2015\\Projects\\EcWebApp\\EcWebApp\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\dobwi\\documents\\visual\ studio\ 2015\\Projects\\EcWebApp\\EcWebApp\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="EspacoContext-Web.config Connection String" description="" value="Server=tcp:ritris.database.windows.net,1433;Data Source=ritris.database.windows.net;Initial Catalog=EspacoDb;Persist Security Info=False;User ID=webappuser;Password=Dj102030!;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\dobwi\\documents\\visual\ studio\ 2015\\Projects\\EcWebApp\\EcWebApp\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='EspacoContext']/@connectionString" />
+  </parameter>
+</parameters>

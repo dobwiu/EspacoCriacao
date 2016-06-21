@@ -1,0 +1,82 @@
+﻿@model EcWebApp.Models.LancamentoInfo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>LancamentoInfo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Conta.Descricao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Conta.Descricao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuario.NomeUsuario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usuario.NomeUsuario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoLancamento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoLancamento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Valor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Valor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataProcessamento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataProcessamento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Processado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Processado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataLancamento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataLancamento)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdLancamento }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

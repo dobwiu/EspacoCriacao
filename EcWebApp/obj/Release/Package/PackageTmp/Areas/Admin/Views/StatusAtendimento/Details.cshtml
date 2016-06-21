@@ -1,0 +1,60 @@
+﻿@model EcWebApp.Models.StatusAtendimentoInfo
+
+@{
+    ViewBag.Title = "Status de Atendimento";
+    ViewBag.SubTitle = "Visualização";
+}
+
+@section header {
+    <link rel="stylesheet" href="~/Content/iCheck/square/blue.css" />
+}
+
+<div class="box">
+    <div class="box-body">
+        <div class="form">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.Descricao, new { htmlAttributes = new { @class = "form-control", @readonly="readonly" } })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <span></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TipoStatus, htmlAttributes: new { @class = "control-label" })
+                        @Html.EnumDropDownListFor(model => model.TipoStatus, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <span></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.EditorFor(model => model.Ativo, new { htmlAttributes = new { @class = "square", @disabled = "disabled" } })
+                &nbsp;
+                @Html.LabelFor(model => model.Ativo, htmlAttributes: new { @class = "control-label" })
+            </div>
+        </div> <!-- form -->
+    </div><!-- box-body -->
+    <div class="box-footer">
+        @Html.ActionLink("Editar", "Edit", new { id = Model.IdStatus }) |
+        @Html.ActionLink("Voltar", "Index")
+    </div>
+</div>
+
+@section scripts {
+    <!-- page script -->
+    <script>
+        $(function () {
+            $('input[type="checkbox"].square').iCheck({ checkboxClass: 'icheckbox_square-blue' });
+        });
+    </script>
+}

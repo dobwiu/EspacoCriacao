@@ -1,0 +1,99 @@
+﻿@model IEnumerable<EcWebApp.Models.UsuarioInfo>
+
+@{
+    ViewBag.Title = "Usuários";
+    ViewBag.SubTitle = "Listagem";
+}
+
+@section header {
+    <link href="~/Content/datatables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        @Html.ActionLink("Cadastrar Novo Usuário", "Create")
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-body">
+                <table id="tblUsuarios" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NomeUsuario)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.LoginUsuario)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Ativo)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.ActionLink(@item.NomeUsuario, "Edit", new { id = item.IdUsuario })
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.LoginUsuario)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Ativo)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/datatables")
+    <!-- page script -->
+    <script>
+        $(function () {
+            $('input[type="checkbox"]').iCheck({ checkboxClass: 'icheckbox_square-blue' });
+
+            $('#tblUsuarios').DataTable({
+                "responsive": true,
+                "paging": true,
+                "lengthChange": false,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "language": {
+                    "sEmptyTable": "Nenhum registro encontrado",
+                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "_MENU_ resultados por página",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "sSearch": "Pesquisar",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    }
+                }
+            });
+        });
+    </script>
+}

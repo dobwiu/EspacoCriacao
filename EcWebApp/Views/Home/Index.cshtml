@@ -1,0 +1,86 @@
+﻿@model EcWebApp.ViewModels.DashboardInfo
+
+@{
+    ViewBag.Title = "Indicativos do Mês";
+    ViewBag.SubTitle = string.Concat(DateTime.Today.ToString("MMM"), " / ", DateTime.Today.Year);
+}
+
+@section header {
+    <link href="~/Content/ionicons.min.css" rel="stylesheet" />
+}
+
+<!-- Small boxes (Stat box) -->
+<div class="row">
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-green">
+            <div class="inner">
+                <h3>@Model.NovosClientes</h3>
+                <p>Clientes Cadastrados</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-person-add"></i>
+            </div>
+            <a href="@Url.Action("Index", "Clientes", new { Area = "Orc" })" class="small-box-footer">
+                Mais Informação <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-aqua">
+            <div class="inner">
+                <h3>@Model.Agendamentos</h3>
+                <p>Clientes Agendados</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-calendar"></i>
+            </div>
+            <a href="@Url.Action("Index","Atendimentos", new { Area = "Orc" })" class="small-box-footer">
+                Mais Informação <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-yellow">
+            <div class="inner">
+                <h3><sup style="font-size: 20px">R$</sup>@Model.ValorOrcamentos</h3>
+                <p>Orçamento Previsto</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-cash"></i>
+            </div>
+            <a href="@Url.Action("Index", "Clientes", new { Area = "Orc" })" class="small-box-footer">
+                Mais Informação <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-red">
+            <div class="inner">
+                @if (Model.MetaVendas.HasValue)
+                {
+                    <h3>@Model.MetaVendas<sup style="font-size: 20px">%</sup></h3>
+                }
+                else
+                {
+                    <h3>---</h3>
+                }
+                <p>Meta Alcançada</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+            </div>
+            <a href="#" class="small-box-footer">
+                Mais Informação <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <!-- ./col -->
+</div>
+<!-- /.row -->

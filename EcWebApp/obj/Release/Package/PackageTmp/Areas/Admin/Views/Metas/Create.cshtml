@@ -1,0 +1,94 @@
+﻿@model EcWebApp.Models.MetaInfo
+
+@{
+    ViewBag.Title = "Metas";
+    ViewBag.SubTitle = "Novo Item";
+}
+
+<!-- form start -->
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="box">
+        <div class="box-body">
+            <div class="form">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Mes, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Mes, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Mes, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Ano, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Ano, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Ano, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <span></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ValorMeta, htmlAttributes: new { @class = "control-label" })
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <b>R$</b>
+                                </div>
+                                @Html.EditorFor(model => model.ValorMeta, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.ValorMeta, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-8">
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ValorDesafio, htmlAttributes: new { @class = "control-label" })
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <b>R$</b>
+                                </div>
+                                @Html.EditorFor(model => model.ValorDesafio, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.ValorDesafio, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-8">
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                </div>
+            </div> <!-- form -->
+        </div><!-- box-body -->
+        <div class="box-footer">
+            <input type="submit" value="Salvar" class="btn btn-primary" />
+            @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
+        </div>
+    </div>
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <!-- page script -->
+    <script>
+        $(function () {
+            var msg = "@ViewBag.MsgErro";
+            if (msg != "OK" && msg != "") {
+                bootbox.alert(msg);
+            }
+        });
+    </script>
+}
