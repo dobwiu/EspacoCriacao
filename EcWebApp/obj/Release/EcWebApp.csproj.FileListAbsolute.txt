@@ -72,3 +72,4 @@ C:\Users\dobwi\documents\visual studio 2015\Projects\EcWebApp\EcWebApp\obj\Relea
 C:\Users\dobwi\documents\visual studio 2015\Projects\EcWebApp\EcWebApp\obj\Release\EcWebApp.csproj.GenerateResource.Cache
 C:\Users\dobwi\documents\visual studio 2015\Projects\EcWebApp\EcWebApp\obj\Release\EcWebApp.dll
 C:\Users\dobwi\documents\visual studio 2015\Projects\EcWebApp\EcWebApp\obj\Release\EcWebApp.pdb
+C:\Users\dobwi\documents\visual studio 2015\Projects\EcWebApp\EcWebApp\obj\Release\EcWebApp.csprojResolveAssemblyReference.cache
