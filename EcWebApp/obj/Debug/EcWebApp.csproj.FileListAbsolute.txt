@@ -69,7 +69,7 @@ C:\Users\dobwi\documents\visual studio 2015\Projects\EcWebApp\EcWebApp\obj\Debug
 C:\Users\dobwi\documents\visual studio 2015\Projects\EcWebApp\EcWebApp\obj\Debug\EcWebApp.Migrations.Comentarios.resources
 C:\Users\dobwi\documents\visual studio 2015\Projects\EcWebApp\EcWebApp\obj\Debug\EcWebApp.Migrations.NovoPedido.resources
 C:\Users\dobwi\documents\visual studio 2015\Projects\EcWebApp\EcWebApp\obj\Debug\EcWebApp.Migrations.PopAmbiente.resources
+C:\Users\dobwi\documents\visual studio 2015\Projects\EcWebApp\EcWebApp\obj\Debug\EcWebApp.Migrations.Pedido.resources
 C:\Users\dobwi\documents\visual studio 2015\Projects\EcWebApp\EcWebApp\obj\Debug\EcWebApp.csproj.GenerateResource.Cache
 C:\Users\dobwi\documents\visual studio 2015\Projects\EcWebApp\EcWebApp\obj\Debug\EcWebApp.dll
 C:\Users\dobwi\documents\visual studio 2015\Projects\EcWebApp\EcWebApp\obj\Debug\EcWebApp.pdb
-C:\Users\dobwi\documents\visual studio 2015\Projects\EcWebApp\EcWebApp\obj\Debug\EcWebApp.csprojResolveAssemblyReference.cache

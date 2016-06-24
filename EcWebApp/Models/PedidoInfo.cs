@@ -38,6 +38,10 @@ namespace EcWebApp.Models
         [Display(Name = "Fase do Pedido")]
         public EnumFasePedido? FasePedido { get; set; }
 
+        [Display(Name = "Observações")]
+        [StringLength(1000), DataType(DataType.MultilineText)]
+        public string Observacoes { get; set; }
+
         [NotMapped]
         public double? DiasParaEntrega
         {
@@ -58,6 +62,9 @@ namespace EcWebApp.Models
 
         [Display(Name = "Total a Prazo"), DataType(DataType.Currency)]
         public Decimal? ValorPrazo { get; set; }
+
+        [Display(Name = "Entrada"), DataType(DataType.Currency)]
+        public Decimal? ValorEntrada { get; set; }
 
         [Display(Name = "Forma de Pagamento")]
         public int? IdFormaPagamento { get; set; }
@@ -118,17 +125,17 @@ namespace EcWebApp.Models
         [StringLength(100)]
         public string Puxador { get; set; }
 
-        [StringLength(100)] /* Tmaponamento */
+        [StringLength(100)] 
         public string Complemento { get; set; }
 
         [StringLength(100)]
         public string Modelo { get; set; }
 
-        [StringLength(50)]
+        [StringLength(50)] /* Tmaponamento - Espessura */
         public string Espessura { get; set; }
 
-        [StringLength(500)]
-        public string Observacao { get; set; }
+        //[StringLength(500)]
+        //public string Observacao { get; set; }
 
         #region Propriedades de Navegação..
         [Required]

@@ -21,7 +21,10 @@ namespace EcWebApp.Areas.Orc.Controllers
         // GET: Orc/Clientes
         public ActionResult Index()
         {
-            var clientes = db.Clientes.Include(c => c.Vendedor).Include(c => c.StatusAtendimento);
+            var clientes = db.Clientes.Include(c => c.Vendedor).Include(c => c.StatusAtendimento)
+                             .Where(s => s.Interesse != EnumInteresse.SemInteresse)
+                             .OrderByDescending(o => o.DataCadastro).ThenBy(a => a.NomeCliente);
+
             return View(clientes.ToList());
         }
 

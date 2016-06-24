@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Pedido de Compra";
-    ViewBag.SubTitle = string.Concat("#",Model.NumeroPedido);
+    ViewBag.SubTitle = string.Concat("#", Model.NumeroPedido);
 }
 
 @using (Html.BeginForm())
@@ -14,6 +14,7 @@
     @Html.HiddenFor(model => model.IdCliente)
     @Html.HiddenFor(model => model.IdVendedor)
     @Html.HiddenFor(model => model.StatusPedido)
+    @Html.HiddenFor(model => model.Observacoes)
 
     <div class="box box-primary">
         <div class="box-header with-border">
@@ -56,7 +57,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <div class="form-group">
                         @Html.LabelFor(model => model.IdFormaPagamento, htmlAttributes: new { @class = "control-label" })
                         @if (Model.StatusPedido == EcWebApp.Models.EnumStatusPedido.Aberto)
@@ -87,11 +88,27 @@
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
+                        @Html.LabelFor(model => model.ValorEntrada, htmlAttributes: new { @class = "control-label" })
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <b>R$</b>
+                            </div>
+                            @if (Model.StatusPedido == EcWebApp.Models.EnumStatusPedido.Aberto)
+                            {
+                                @Html.EditorFor(model => model.ValorEntrada, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ValorEntrada, "", new { @class = "text-danger" })
+                            }
+                            else
+                            {
+                                @Html.EditorFor(model => model.ValorEntrada, new { htmlAttributes = new { @class = "form-control", @readOnly = "readOnly" } })
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
                         @Html.LabelFor(model => model.NumeroParcelas, htmlAttributes: new { @class = "control-label" })
                         <div class="input-group">
-                            <div class="input-group-btn">
-                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#mdlParcelas"><i class="fa fa-info-circle"></i></button>
-                            </div>
                             @if (Model.StatusPedido == EcWebApp.Models.EnumStatusPedido.Aberto)
                             {
                                 @Html.EditorFor(model => model.NumeroParcelas, new { htmlAttributes = new { @class = "form-control" } })
@@ -101,6 +118,9 @@
                             {
                                 @Html.EditorFor(model => model.NumeroParcelas, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                             }
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#mdlParcelas"><i class="fa fa-info-circle"></i></button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -128,13 +148,13 @@
                             @if (Model.StatusPedido == EcWebApp.Models.EnumStatusPedido.Aberto)
                             {
                                 @Html.EditorFor(model => model.ValorPrazo, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ValorPrazo, "", new { @class = "text-danger" })
                             }
                             else
                             {
                                 @Html.EditorFor(model => model.ValorPrazo, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                             }
                         </div>
-                        @Html.ValidationMessageFor(model => model.ValorPrazo, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
@@ -157,8 +177,8 @@
                 }
 
                 <div class="pull-right">
-                    <a href="@Url.Action("ImprimirPedido", new {@id = Model.IdPedido })" class="btn btn-info btn-sm" target="_blank">Imprimir Pedido</a>
-                    <a href="@Url.Action("ImprimirContrato", new {@id = Model.IdPedido })" class="btn btn-info btn-sm" target="_blank">Imprimir Contrato</a>
+                    <a href="@Url.Action("ImprimirPedido", new { @id=Model.IdPedido })" class="btn btn-info btn-sm" target="_blank">Imprimir Pedido</a>
+                    <a href="@Url.Action("ImprimirContrato", new { @id=Model.IdPedido })" class="btn btn-info btn-sm" target="_blank">Imprimir Contrato</a>
                 </div>
             </div>
         </div><!-- /.box-footer -->
@@ -184,14 +204,15 @@
                             <th>Item</th>
                             <th>Qtde</th>
                             <th>Ambiente</th>
+                            <th>Fabricante</th>
                             <th>Modelo</th>
-                            <th>Espessura</th>
                             <th>Corpo</th>
                             <th>Portas</th>
                             <th>Puxadores</th>
-                            <th>Tamponamentos</th>
+                            <th>Complemento</th>
+                            <th>Tamp./Espessura</th>
                             <th>Prazo</th>
-                            <th>Valor</th>
+                            <th class="text-center">Valor</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -200,12 +221,13 @@
                             <td>{{amb.Item}}</td>
                             <td>{{amb.Qtde}}</td>
                             <td>{{amb.Descricao}}</td>
+                            <td>{{amb.Fornecedor}}</td>
                             <td>{{amb.Modelo}}</td>
-                            <td>{{amb.Espessura}}</td>
                             <td>{{amb.Corpo}}</td>
                             <td>{{amb.Portas}}</td>
                             <td>{{amb.Puxador}}</td>
                             <td>{{amb.Complemento}}</td>
+                            <td>{{amb.Espessura}}</td>
                             <td>{{amb.Prazo}}</td>
                             <td class="text-right">{{amb.Valor | currency:"R$"}}</td>
                             <td>
@@ -248,11 +270,11 @@
                             </td>
                         </tr>
                         <tr>
+                            <td><label class="control-label">Fabricante:</label></td>
+                            <td colspan="2"><input type="text" class="form-control" ng-model="novoAmb.Fornecedor" /></td>
+
                             <td><label class="control-label">Modelo:</label></td>
                             <td colspan="2"><input type="text" class="form-control" ng-model="novoAmb.Modelo" /></td>
-
-                            <td><label class="control-label">Espessura:</label></td>
-                            <td colspan="2"><input type="text" class="form-control" ng-model="novoAmb.Espessura" /></td>
                         </tr>
                         <tr>
                             <td><label class="control-label">Corpo:</label></td>
@@ -265,18 +287,22 @@
                             <td><label class="control-label">Puxador:</label></td>
                             <td colspan="2"><input type="text" class="form-control" ng-model="novoAmb.Puxador" /></td>
 
-                            <td><label class="control-label">Tamponamentos:</label></td>
+                            <td><label class="control-label">Complemento:</label></td>
                             <td colspan="2"><input type="text" class="form-control" ng-model="novoAmb.Complemento" /></td>
                         </tr>
                         <tr>
-                            <td><label class="control-label">Qtde:</label></td>
-                            <td><input type="text" class="form-control" ng-model="novoAmb.Qtde" /></td>
+                            <td><label class="control-label">Tamp./Espessura:</label></td>
+                            <td colspan="2"><input type="text" class="form-control" ng-model="novoAmb.Espessura" /></td>
 
+                            <td><label class="control-label">Qtde:</label></td>
+                            <td colspan="2"><input type="text" class="form-control" ng-model="novoAmb.Qtde" /></td>
+                        </tr>
+                        <tr>
                             <td><label class="control-label">Prazo:</label></td>
-                            <td><input type="text" class="form-control" ng-model="novoAmb.Prazo" /></td>
+                            <td colspan="2"><input type="text" class="form-control" ng-model="novoAmb.Prazo" /></td>
 
                             <td><label class="control-label">Valor:</label></td>
-                            <td><input type="text" class="form-control" ng-model="novoAmb.Valor" /></td>
+                            <td colspan="2"><input type="text" class="form-control" ng-model="novoAmb.Valor" /></td>
                         </tr>
                     </table>
                 </div><!-- modal-body -->
@@ -289,6 +315,29 @@
         </div><!-- modal-dialog -->
     </div><!-- modal -->
 </div><!-- ng-controller -->
+
+<div class="box box-default">
+    <div class="box-header with-border">
+        <h3 class="box-title">Observações</h3>
+    </div>
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    @if (Model.StatusPedido == EcWebApp.Models.EnumStatusPedido.Aberto)
+                    {
+                        <textarea id="txtObs" class="form-control" rows="3">@Model.Observacoes</textarea>
+                    }
+                    else
+                    {
+                        <textarea id="txtObs" class="form-control" rows="3" readonly="readonly">@Model.Observacoes</textarea>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Modal -->
 <div id="mdlParcelas" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -375,6 +424,10 @@
                 format: 'L'
             });
 
+            $("#txtObs").change(function () {
+                var texto = $("#txtObs").val();
+                $("#Observacoes").val(texto);
+            });
 
             if ($("#btnStatusPedido").length) {
                 $("#btnStatusPedido").click(function () {
@@ -387,9 +440,6 @@
                     });
                 });
             }
-
-            //$("#btnImprimirPedido").click(function () { });
-            //$("#btnImprimirContrato").click(function () { });
 
             var msg = "@ViewBag.MsgErro";
             if (msg != "") {

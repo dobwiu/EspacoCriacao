@@ -21,7 +21,11 @@ namespace EcWebApp.Areas.Orc.Controllers
         // GET: Orc/Pedidos
         public ActionResult Index()
         {
-            var pedidoInfoes = db.Pedidos.Include(p => p.Cliente).Include(p => p.FormaPagamento).Include(p => p.Vendedor).OrderBy(o => o.NumeroPedido);
+            var pedidoInfoes = db.Pedidos.Include(p => p.Cliente)
+                                 .Include(p => p.FormaPagamento).Include(p => p.Vendedor)
+                                 .Where(s => s.Cliente.Interesse != EnumInteresse.SemInteresse)
+                                 .OrderBy(o => o.NumeroPedido);
+
             return View(pedidoInfoes.ToList());
         }
 
@@ -204,10 +208,12 @@ namespace EcWebApp.Areas.Orc.Controllers
                 StatusPedido = pedidoInfo.StatusPedido,
                 FasePedido = pedidoInfo.FasePedido,
                 ValorOrcamento = pedidoInfo.ValorOrcamento,
+                ValorEntrada = pedidoInfo.ValorEntrada,
                 ValorPrazo = pedidoInfo.ValorPrazo,
                 IdFormaPagamento = pedidoInfo.IdFormaPagamento,
                 CondicaoPagamento = pedidoInfo.CondicaoPagamento,
-                NumeroParcelas = pedidoInfo.NumeroParcelas
+                NumeroParcelas = pedidoInfo.NumeroParcelas,
+                Observacoes = pedidoInfo.Observacoes
             };
         }
 

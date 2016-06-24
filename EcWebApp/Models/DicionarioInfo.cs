@@ -124,7 +124,9 @@ namespace EcWebApp.Models
         [Display(Name = "Negociação")]
         Negociacao = 2,
         [Display(Name = "Fechamento")]
-        Fechamento = 3
+        Fechamento = 3,
+        [Display(Name = "Sem Mais Interesse")]
+        SemInteresse = 9
     }
 
     public enum EnumFasePedido : int

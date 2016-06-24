@@ -24,7 +24,7 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body>
+<body onload="window.print()">
     <div class="wrapper">
         <!-- Main content -->
         <section class="content">
@@ -185,6 +185,7 @@
                         <thead>
                             <tr>
                                 <th>Total a Prazo</th>
+                                <th>Valor da Entrada</th>
                                 <th>Condição de Pagamento</th>
                                 <th>Forma de Pagamento</th>
                             </tr>
@@ -192,10 +193,37 @@
                         <tbody>
                             <tr>
                                 <td>@Model.Pedido.ValorPrazo</td>
+                                <td>@Model.Pedido.ValorEntrada</td>
                                 <td>@Model.Pedido.CondicaoPagamento.ToString()</td>
                                 <td>@Model.Pedido.FormaPagamento.Descricao</td>
                             </tr>
                         </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <span style="line-height:70px">&nbsp;</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <table style="width:96%" align="center">
+                        <tr>
+                            <td style="text-align:center; width:40%; border-top: 1px solid black;"><h5>Espaço Criação</h5></td>
+                            <td></td>
+                            <td style="text-align:center; width:40%; border-top: 1px solid black;"><h5>Contratante</h5></td>
+                        </tr>
+                        <tr>
+                            <td><span style="line-height:100px">&nbsp;</span></td>
+                            <td><span style="line-height:100px">&nbsp;</span></td>
+                            <td><span style="line-height:100px">&nbsp;</span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center; width:40%; border-top: 1px solid black;"><b>Testemunha 1</b></td>
+                            <td></td>
+                            <td style="text-align:center; width:40%; border-top: 1px solid black;"><b>Testemunha 2</b></td>
+                        </tr>
                     </table>
                 </div>
             </div>

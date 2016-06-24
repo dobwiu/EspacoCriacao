@@ -200,6 +200,10 @@
     <Compile Include="Migrations\201606100220522_PopAmbiente.Designer.cs">
       <DependentUpon>201606100220522_PopAmbiente.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606240134122_Pedido.cs" />
+    <Compile Include="Migrations\201606240134122_Pedido.Designer.cs">
+      <DependentUpon>201606240134122_Pedido.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AnexoInfo.cs" />
     <Compile Include="Models\AtendimentoInfo.cs" />
@@ -598,6 +602,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606100220522_PopAmbiente.resx">
       <DependentUpon>201606100220522_PopAmbiente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606240134122_Pedido.resx">
+      <DependentUpon>201606240134122_Pedido.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
