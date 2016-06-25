@@ -39,7 +39,10 @@
                                 @Html.DisplayNameFor(model => model.IdStatus)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.DataUltimoContato)
+                                @Html.DisplayNameFor(model => model.DataCadastro)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DataPrimeiroContato)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.DataProximoContato)
@@ -76,7 +79,10 @@
                                     @Html.DisplayFor(modelItem => item.StatusAtendimento.Descricao)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.DataUltimoContato)
+                                    @Html.DisplayFor(modelItem => item.DataCadastro)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DataPrimeiroContato)
                                 </td>
                                 <td>
                                     @if (item.DataProximoContato.HasValue && (item.DataProximoContato.Value < DateTime.Today))

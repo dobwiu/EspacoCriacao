@@ -61,6 +61,10 @@ namespace EcWebApp.Models
         #endregion
 
         #region Atendimento..
+        [Display(Name = "Primeiro Contato"), DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? DataPrimeiroContato { get; set; }
+
         [Display(Name = "Último Contato"), DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? DataUltimoContato { get; set; }

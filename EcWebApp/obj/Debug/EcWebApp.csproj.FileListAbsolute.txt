@@ -73,3 +73,5 @@ C:\Users\dobwi\documents\visual studio 2015\Projects\EcWebApp\EcWebApp\obj\Debug
 C:\Users\dobwi\documents\visual studio 2015\Projects\EcWebApp\EcWebApp\obj\Debug\EcWebApp.csproj.GenerateResource.Cache
 C:\Users\dobwi\documents\visual studio 2015\Projects\EcWebApp\EcWebApp\obj\Debug\EcWebApp.dll
 C:\Users\dobwi\documents\visual studio 2015\Projects\EcWebApp\EcWebApp\obj\Debug\EcWebApp.pdb
+C:\Users\dobwi\documents\visual studio 2015\Projects\EcWebApp\EcWebApp\obj\Debug\EcWebApp.csprojResolveAssemblyReference.cache
+C:\Users\dobwi\documents\visual studio 2015\Projects\EcWebApp\EcWebApp\obj\Debug\EcWebApp.Migrations.DataAtendimento.resources

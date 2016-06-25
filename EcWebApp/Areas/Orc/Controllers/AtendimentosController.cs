@@ -83,6 +83,11 @@ namespace EcWebApp.Areas.Orc.Controllers
             clienteInfo.Comentarios = atendimentoInfo.Comentario;
             clienteInfo.DataUltimoContato = atendimentoInfo.DataAtendimento;
 
+            //-- Caso seja o primeiro contato, atualiza a data também.
+            if (!clienteInfo.DataPrimeiroContato.HasValue)
+                clienteInfo.DataPrimeiroContato = atendimentoInfo.DataAtendimento;
+
+
             db.Entry(clienteInfo).State = EntityState.Modified;
             db.SaveChanges();
         }

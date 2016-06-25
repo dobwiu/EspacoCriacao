@@ -204,6 +204,10 @@
     <Compile Include="Migrations\201606240134122_Pedido.Designer.cs">
       <DependentUpon>201606240134122_Pedido.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606250203073_DataAtendimento.cs" />
+    <Compile Include="Migrations\201606250203073_DataAtendimento.Designer.cs">
+      <DependentUpon>201606250203073_DataAtendimento.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AnexoInfo.cs" />
     <Compile Include="Models\AtendimentoInfo.cs" />
@@ -605,6 +609,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606240134122_Pedido.resx">
       <DependentUpon>201606240134122_Pedido.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606250203073_DataAtendimento.resx">
+      <DependentUpon>201606250203073_DataAtendimento.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
