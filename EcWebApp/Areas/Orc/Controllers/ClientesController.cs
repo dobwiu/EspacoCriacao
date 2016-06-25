@@ -118,7 +118,8 @@ namespace EcWebApp.Areas.Orc.Controllers
                 IdVendedor = clienteInfo.IdVendedor,
                 DataAtendimento = DateTime.Now,
                 Comentario = comentario,
-                RegistradoPor = this.NomeUsuario
+                RegistradoPor = this.NomeUsuario,
+                Automatico = true
             };
 
             db.Atendimentos.Add(atendimento);
@@ -185,7 +186,7 @@ namespace EcWebApp.Areas.Orc.Controllers
                 db.Entry(clienteInfo).State = EntityState.Modified;
                 db.SaveChanges();
 
-                this.RegistraAtendimento(clienteInfo, "Atualização dos dados");
+                //this.RegistraAtendimento(clienteInfo, "Atualização dos dados");
                 return RedirectToAction("Index");
             }
             else

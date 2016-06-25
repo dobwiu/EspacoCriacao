@@ -49,7 +49,7 @@ namespace EcWebApp.Models
         public int IdCategoria { get; set; }
 
         [Display(Name = "Descrição do Lançamento")]
-        [StringLength(50), Required]
+        [StringLength(100), Required]
         public string Descricao { get; set; }
 
         [DataType(DataType.Currency), Required]
@@ -57,6 +57,10 @@ namespace EcWebApp.Models
 
         [DataType(DataType.DateTime), Required]
         public DateTime DataProcessamento { get; set; }
+
+        [Display(Name = "Comentário")]
+        [StringLength(100), DataType(DataType.MultilineText)]
+        public string Comentario { get; set; }
 
         public bool Processado { get; set; }
 

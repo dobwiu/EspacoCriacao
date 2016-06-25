@@ -48,6 +48,8 @@ namespace EcWebApp.Models
 
         public string RegistradoPor { get; set; }
 
+        public bool? Automatico { get; set; }
+
         #region Propriedades de Navegação..
         [ForeignKey("IdStatus")]
         public StatusAtendimentoInfo Status { get; set; }

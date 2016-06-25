@@ -6,7 +6,14 @@
         <!-- timeline item -->
         <li>
             <!-- timeline icon -->
-            <i class="fa fa-pencil bg-blue"></i>
+            @if (item.Automatico.GetValueOrDefault(false))
+            {
+                <i class="fa fa-pencil bg-gray"></i>
+            }
+            else
+            {
+                <i class="fa fa-phone bg-blue"></i>
+            }
             <div class="timeline-item">
                 <span class="time"><i class="fa fa-user"></i> @item.RegistradoPor</span>
                 <h3 class="timeline-header">@item.DataAtendimento</h3>

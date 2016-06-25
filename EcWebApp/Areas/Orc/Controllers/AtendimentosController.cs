@@ -56,6 +56,7 @@ namespace EcWebApp.Areas.Orc.Controllers
                 atendimentoInfo.IdAtendimento = Guid.NewGuid();
                 atendimentoInfo.DataAtendimento = DateTime.Now;
                 atendimentoInfo.RegistradoPor = this.NomeUsuario;
+                atendimentoInfo.Automatico = false;
 
                 db.Atendimentos.Add(atendimentoInfo);
                 db.SaveChanges();
