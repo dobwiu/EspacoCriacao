@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<parameters>
-  <parameter name="EspacoContext-Web.config Connection String" description="EspacoContext Connection String used in web.config by the application to access the database." defaultValue="Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=EspacoDb;Data Source=(local)\SQLEXPRESS" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="C:\\Users\\dobwi\\documents\\visual\ studio\ 2015\\Projects\\EcWebApp\\EcWebApp\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='EspacoContext']/@connectionString" />
-  </parameter>
-</parameters>

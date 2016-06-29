@@ -24,7 +24,8 @@ namespace EcWebApp.Controllers
             var metaMes = db.Metas.Where(s => s.Mes == DateTime.Today.Month && s.Ano == DateTime.Today.Year).FirstOrDefault();
             if (metaMes != null && metaMes.ValorMeta.HasValue)
             {
-                dash.MetaVendas = Math.Round((dash.ValorOrcamentos * 100 / metaMes.ValorMeta.Value),2);
+                var valorPedidos = db.Pedidos.Where(s => s.DataPedido.Month == DateTime.Today.Month && s.DataPedido.Year == DateTime.Today.Year).Sum(x => x.ValorOrcamento);
+                dash.MetaVendas = Math.Round((valorPedidos * 100 / metaMes.ValorMeta.Value),2);
             }
 
             return View(dash);

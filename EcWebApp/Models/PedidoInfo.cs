@@ -30,6 +30,7 @@ namespace EcWebApp.Models
 
         #region Status e Fase..
         [Display(Name = "Prazo de Entrega"), DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? PrazoEntrega { get; set; }
 
         [Display(Name = "Status do Pedido")]
