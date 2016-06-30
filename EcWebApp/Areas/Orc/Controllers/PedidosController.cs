@@ -24,7 +24,7 @@ namespace EcWebApp.Areas.Orc.Controllers
             var pedidoInfoes = db.Pedidos.Include(p => p.Cliente)
                                  .Include(p => p.FormaPagamento).Include(p => p.Vendedor)
                                  .Where(s => s.Cliente.Interesse != EnumInteresse.SemInteresse)
-                                 .OrderBy(o => o.NumeroPedido);
+                                 .OrderByDescending(o => o.NumeroPedido);
 
             return View(pedidoInfoes.ToList());
         }
