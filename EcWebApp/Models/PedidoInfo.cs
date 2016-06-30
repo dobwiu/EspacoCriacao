@@ -70,8 +70,8 @@ namespace EcWebApp.Models
         [Display(Name = "Forma de Pagamento")]
         public int? IdFormaPagamento { get; set; }
 
-        [Display(Name = "Condição de Pagamento")]
-        public EnumCondicaoPagamento? CondicaoPagamento { get; set; }
+        [Display(Name = "Condição de Pagamento"), StringLength(50)]
+        public string CondicaoPagamento { get; set; }
 
         [Display(Name = "Parcelas")]
         public int? NumeroParcelas { get; set; }
@@ -126,7 +126,7 @@ namespace EcWebApp.Models
         [StringLength(100)]
         public string Puxador { get; set; }
 
-        [StringLength(100)] 
+        [StringLength(100)]
         public string Complemento { get; set; }
 
         [StringLength(100)]

@@ -77,12 +77,12 @@
                         @Html.LabelFor(model => model.CondicaoPagamento, htmlAttributes: new { @class = "control-label" })
                         @if (Model.StatusPedido == EcWebApp.Models.EnumStatusPedido.Aberto)
                         {
-                            @Html.EnumDropDownListFor(model => model.CondicaoPagamento, "Selecione..", htmlAttributes: new { @class = "form-control" })
+                            @Html.EditorFor(model => model.CondicaoPagamento, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.CondicaoPagamento, "", new { @class = "text-danger" })
                         }
                         else
                         {
-                            @Html.EnumDropDownListFor(model => model.CondicaoPagamento, "Selecione..", htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                            @Html.EditorFor(model => model.CondicaoPagamento, new { htmlAttributes = new { @class = "form-control", @readOnly = "readOnly" } })
                         }
                     </div>
                 </div>
