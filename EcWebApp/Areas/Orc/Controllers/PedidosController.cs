@@ -158,7 +158,8 @@ namespace EcWebApp.Areas.Orc.Controllers
             var printPedido = new PrintPedidoInfo()
             {
                 Pedido = db.Pedidos.Include(c => c.Cliente).Include(v => v.Vendedor).Include(f => f.FormaPagamento).Where(s => s.IdPedido == id).First(),
-                Ambientes = db.Ambientes.Where(s => s.IdPedido == id).OrderBy(o => o.Item).ToList()
+                Ambientes = db.Ambientes.Where(s => s.IdPedido == id).OrderBy(o => o.Item).ToList(),
+                Parcelas = db.Parcelas.Where(p=> p.IdPedido == id).ToList()
             };
 
             //-- Endereço de Entrega -->

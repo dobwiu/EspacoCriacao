@@ -47,7 +47,14 @@
         <!-- small box -->
         <div class="small-box bg-yellow">
             <div class="inner">
+                @if (Model.ValorOrcamentos.HasValue)
+                {
                 <h3><sup style="font-size: 20px">R$</sup>@Model.ValorOrcamentos</h3>
+                }
+                else
+                {
+                    <h3>---</h3>
+                }
                 <p>Orçamento Previsto</p>
             </div>
             <div class="icon">

@@ -8,17 +8,19 @@ namespace EcWebApp.ViewModels
     {
         public PedidoInfo Pedido { get; set; }
 
-        public EnderecoInfo Entrega {get; set;}
-        
+        public EnderecoInfo Entrega { get; set; }
+
         public ICollection<AmbienteInfo> Ambientes { get; set; }
+
+        public ICollection<ParcelaInfo> Parcelas { get; set; }
     }
 
     public class PrintContratoInfo
     {
-        public string NumeroContrato {get; set;}
-        
-        public DateTime DataContrato {get; set;}
+        public string NumeroContrato { get; set; }
 
-        public string NomeCliente {get; set;}
+        public DateTime DataContrato { get; set; }
+
+        public string NomeCliente { get; set; }
     }
 }
