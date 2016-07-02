@@ -201,6 +201,7 @@ namespace EcWebApp.Areas.Orc.Controllers
             {
                 IdPedido = pedidoInfo.IdPedido,
                 NumeroPedido = pedidoInfo.NumeroPedido,
+                TipoContrato = pedidoInfo.TipoContrato,
                 IdCliente = pedidoInfo.IdCliente,
                 IdVendedor = pedidoInfo.IdVendedor,
                 DataPedido = pedidoInfo.DataPedido,

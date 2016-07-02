@@ -25,6 +25,9 @@ namespace EcWebApp.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DataPedido { get; set; }
 
+        [Display(Name = "Tipo de Contrato"), StringLength(50)]
+        public string TipoContrato { get; set; }
+
         [Display(Name = "Versão")]
         public string VersaoProMob { get; set; }
 

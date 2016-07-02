@@ -216,6 +216,10 @@
     <Compile Include="Migrations\201606300048530_CondicaoPagamento.Designer.cs">
       <DependentUpon>201606300048530_CondicaoPagamento.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607022225529_TipoContrato.cs" />
+    <Compile Include="Migrations\201607022225529_TipoContrato.Designer.cs">
+      <DependentUpon>201607022225529_TipoContrato.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AnexoInfo.cs" />
     <Compile Include="Models\AtendimentoInfo.cs" />
@@ -626,6 +630,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606300048530_CondicaoPagamento.resx">
       <DependentUpon>201606300048530_CondicaoPagamento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607022225529_TipoContrato.resx">
+      <DependentUpon>201607022225529_TipoContrato.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -23,16 +23,30 @@
         </div><!-- /.box-header -->
         <div class="box-body">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         @Html.LabelFor(model => model.Cliente.NomeCliente, htmlAttributes: new { @class = "control-label" })
                         @Html.EditorFor(model => model.Cliente.NomeCliente, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group">
                         @Html.LabelFor(model => model.IdVendedor, htmlAttributes: new { @class = "control-label" })
                         @Html.EditorFor(model => model.Vendedor.NomeUsuario, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TipoContrato, htmlAttributes: new { @class = "control-label" })
+                        @if (Model.StatusPedido == EcWebApp.Models.EnumStatusPedido.Aberto)
+                        {
+                            @Html.EditorFor(model => model.TipoContrato, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TipoContrato, "", new { @class = "text-danger" })
+                        }
+                        else
+                        {
+                            @Html.EditorFor(model => model.TipoContrato, new { htmlAttributes = new { @class = "form-control", @readOnly = "readOnly" } })
+                        }
                     </div>
                 </div>
                 <div class="col-md-2">
