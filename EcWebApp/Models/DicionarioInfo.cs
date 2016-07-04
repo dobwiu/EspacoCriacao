@@ -139,14 +139,14 @@ namespace EcWebApp.Models
 
     public enum EnumStatusPlanta : int
     {
-        Desenvolver,
+        Desenvolver = 0,
         [Display(Name = "Em Desenvolvimento")]
-        EmDesenvolvimento,
+        EmDesenvolvimento = 1,
         [Display(Name = "Aguardando Aprovação")]
-        AguardandoAprovacao,
+        AguardandoAprovacao = 2,
         [Display(Name = "Em Revisão")]
-        EmRevisao,
-        Finalizada
+        EmRevisao = 3,
+        Finalizada = 4
     }
 
     public enum EnumTipoEndereco : int

@@ -9,6 +9,9 @@ using System.Web.Mvc;
 using EcWebApp.DAL;
 using EcWebApp.Models;
 using EcWebApp.Controllers;
+using EcWebApp.ViewModels;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 
 namespace EcWebApp.Areas.Orc.Controllers
 {
@@ -25,6 +28,8 @@ namespace EcWebApp.Areas.Orc.Controllers
                              .Where(s => s.Interesse != EnumInteresse.SemInteresse)
                              .OrderByDescending(o => o.DataCadastro).ThenBy(a => a.NomeCliente);
 
+            ViewBag.IdVendedor = new SelectList(bllUsuario.ListarUsuarioCombo(), "IdUsuario", "NomeUsuario");
+            ViewBag.IdStatusAtendimento = new SelectList(db.StatusAtendimento, "IdStatus", "Descricao");
             return View(clientes.ToList());
         }
 
@@ -67,9 +72,11 @@ namespace EcWebApp.Areas.Orc.Controllers
             if (ModelState.IsValid)
             {
                 clienteInfo.IdCliente = Guid.NewGuid();
+                //clienteInfo.DataCadastro = DateTime.Now;
                 IList<EnderecoInfo> enderecos = this.VerificaEnderecos(clienteInfo);
 
-                //clienteInfo.DataCadastro = DateTime.Now;
+                clienteInfo.Telefone01 = FormataTelefone(clienteInfo.Telefone01);
+                clienteInfo.Telefone02 = FormataTelefone(clienteInfo.Telefone02);
                 clienteInfo.DataProximoContato = DateTime.Today;
 
                 clienteInfo.Enderecos = null;
@@ -104,6 +111,7 @@ namespace EcWebApp.Areas.Orc.Controllers
             }
         }
 
+        #region Metodos Privados..
         private void RegistraAtendimento(ClienteInfo clienteInfo, string comentario)
         {
             var atendimento = new AtendimentoInfo()
@@ -124,6 +132,17 @@ namespace EcWebApp.Areas.Orc.Controllers
 
             db.Atendimentos.Add(atendimento);
             db.SaveChanges();
+        }
+
+        private void CancelaPedido(Guid? idCliente)
+        {
+            var lstPedidos = db.Pedidos.Where(s => s.IdCliente == idCliente.Value).ToList();
+            foreach (var item in lstPedidos)
+            {
+                item.StatusPedido = EnumStatusPedido.Cancelado;
+                db.Entry(item).State = EntityState.Modified;
+                db.SaveChanges();
+            }
         }
 
         private IList<EnderecoInfo> VerificaEnderecos(ClienteInfo clienteInfo)
@@ -149,6 +168,7 @@ namespace EcWebApp.Areas.Orc.Controllers
             lstEndereco.Add(endEntrega);
             return lstEndereco;
         }
+        #endregion
 
         // GET: Orc/Clientes/Edit/5
         public ActionResult Edit(Guid? id)
@@ -180,6 +200,9 @@ namespace EcWebApp.Areas.Orc.Controllers
         {
             if (ModelState.IsValid)
             {
+                clienteInfo.Telefone01 = FormataTelefone(clienteInfo.Telefone01);
+                clienteInfo.Telefone02 = FormataTelefone(clienteInfo.Telefone02);
+
                 foreach (var item in clienteInfo.Enderecos)
                     db.Entry(item).State = EntityState.Modified;
 
@@ -187,6 +210,8 @@ namespace EcWebApp.Areas.Orc.Controllers
                 db.SaveChanges();
 
                 //this.RegistraAtendimento(clienteInfo, "Atualização dos dados");
+                if (clienteInfo.Interesse == EnumInteresse.SemInteresse) { this.CancelaPedido(clienteInfo.IdCliente); }
+
                 return RedirectToAction("Index");
             }
             else
@@ -240,6 +265,70 @@ namespace EcWebApp.Areas.Orc.Controllers
 
             return PartialView("pvHistorico", historico);
         }
+
+        #region Exportação..
+        public FileResult Exportar(ExportacaoInfo filtro)
+        {
+            string path = HttpContext.Server.MapPath("~/Content/modelos/ExportaClientes.xlsx");
+            System.IO.FileInfo modeloXLS = new System.IO.FileInfo(path);
+
+            using (ExcelPackage xls = new ExcelPackage(modeloXLS))
+            {
+                var xlsClientes = db.Clientes.Include(v => v.Vendedor).Include(s => s.StatusAtendimento);
+                #region Filtros..
+                if (filtro.DataCadastroDe.HasValue)
+                    xlsClientes = xlsClientes.Where(s => s.DataCadastro >= filtro.DataCadastroDe.Value);
+
+                if (filtro.DataCadastroAte.HasValue)
+                {
+                    DateTime dtFinal = filtro.DataCadastroAte.Value.AddDays(1);
+                    xlsClientes = xlsClientes.Where(s => s.DataCadastro < dtFinal);
+                }
+
+                if (filtro.IdVendedor.HasValue)
+                    xlsClientes = xlsClientes.Where(s => s.IdVendedor == filtro.IdVendedor.Value);
+
+                if (filtro.Interesse.HasValue)
+                    xlsClientes = xlsClientes.Where(s => s.Interesse == filtro.Interesse.Value);
+
+                if (filtro.IdStatusAtendimento.HasValue)
+                    xlsClientes = xlsClientes.Where(s => s.IdStatus == filtro.IdStatusAtendimento.Value);
+
+                if (filtro.IdProcedencia.HasValue)
+                    xlsClientes = xlsClientes.Where(s => s.Procedencia == (EnumProcedencia)filtro.IdProcedencia.Value);
+
+                if (filtro.StatusPlanta.HasValue)
+                    xlsClientes = xlsClientes.Where(s => s.StatusPlanta == (EnumStatusPlanta)filtro.StatusPlanta.Value);
+
+                #endregion
+                var xlsListaPedidos = xlsClientes.OrderBy(o => o.DataCadastro).ThenBy(o => o.NomeCliente).ToList();
+
+                int linha = 6;
+                ExcelWorksheet ws = xls.Workbook.Worksheets["Clientes"];
+                foreach (var item in xlsListaPedidos)
+                {
+                    ws.Cells[linha, 02].Value = item.DataCadastro.ToShortDateString();
+                    ws.Cells[linha, 03].Value = item.NomeCliente;
+                    ws.Cells[linha, 04].Value = (item.Interesse == 0 ? "" : item.Interesse.ToString());
+                    ws.Cells[linha, 05].Value = (item.DataMedicao.HasValue ? item.DataMedicao.Value.ToShortDateString() : "");
+                    ws.Cells[linha, 06].Value = (item.DataApresentacao.HasValue ? item.DataApresentacao.Value.ToShortDateString() : "");
+                    ws.Cells[linha, 07].Value = item.StatusAtendimento.Descricao;
+                    ws.Cells[linha, 08].Value = (item.Procedencia == 0 ? "" : item.Procedencia.ToString());
+                    ws.Cells[linha, 09].Value = (item.StatusPlanta.HasValue ? item.StatusPlanta.ToString() : "");
+                    ws.Cells[linha, 10].Value = item.ValorEstimadoProjeto;
+
+                    var pedido = db.Pedidos.Where(s => s.IdCliente == item.IdCliente).FirstOrDefault();
+                    if (pedido != null) { ws.Cells[linha, 11].Value = pedido.Observacoes; }
+                    ws.Cells[linha, 11].Style.WrapText = true;
+
+                    linha++;
+                }
+
+                return File(xls.GetAsByteArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Clientes.xlsx");
+            }
+        }
+        #endregion
+
 
         protected override void Dispose(bool disposing)
         {

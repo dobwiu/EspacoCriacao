@@ -47,14 +47,14 @@ namespace EcWebApp.Models
         public string Observacoes { get; set; }
 
         [NotMapped]
-        public double? DiasParaEntrega
+        public string DataParaEntrega
         {
             get
             {
                 if (PrazoEntrega.HasValue)
-                    return (PrazoEntrega.Value - DateTime.Today).TotalDays;
+                    return PrazoEntrega.Value.ToShortDateString();
                 else
-                    return null;
+                    return string.Empty;
             }
         }
         #endregion
@@ -149,27 +149,6 @@ namespace EcWebApp.Models
         public PedidoInfo Pedido { get; set; }
         #endregion
     }
-
-    // [Table("PedidoObservacoes", Schema = "orc")]
-    // public class PedidoObservacaoInfo
-    // {
-    //     [Key]
-    //     public Guid? IdObservacao { get; set; }
-
-    //     [Required]
-    //     public int Item { get; set; }
-
-    //     [StringLength(500)]
-    //     public string Observacao { get; set; }
-
-    //     #region Propriedades de Navegação..
-    //     [Required]
-    //     public Guid IdPedido { get; set; }
-
-    //     [ForeignKey("IdPedido")]
-    //     public PedidoInfo Pedido { get; set; }
-    //     #endregion
-    // }
 
     [Table("PedidoItensProMob", Schema = "orc")]
     public class ItemProMobInfo

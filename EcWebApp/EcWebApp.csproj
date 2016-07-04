@@ -56,6 +56,9 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EPPlus">
+      <HintPath>..\packages\EPPlus 4.0.5\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -239,6 +242,7 @@
     <Compile Include="ViewModels\AccountInfo.cs" />
     <Compile Include="ViewModels\ArquivoProMobInfo.cs" />
     <Compile Include="ViewModels\DashboardInfo.cs" />
+    <Compile Include="ViewModels\ExportacaoInfo.cs" />
     <Compile Include="ViewModels\PrintPedidoInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -514,6 +518,8 @@
     <Content Include="fonts\ionicons.eot" />
     <Content Include="fonts\ionicons.ttf" />
     <Content Include="fonts\ionicons.woff" />
+    <Content Include="Content\modelos\ExportaPedidos.xlsx" />
+    <Content Include="Content\modelos\ExportaClientes.xlsx" />
     <None Include="Properties\PublishProfiles\EspacoCriacao - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Reports\Contrato.aspx" />

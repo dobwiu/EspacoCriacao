@@ -10,6 +10,11 @@
 }
 
 <div class="row">
+    <div class="col-md-12">
+        <button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#mdlExportar"><i class="glyphicon glyphicon-file"></i> Exportar</button>
+    </div>
+</div>
+<div class="row">
     <div class="col-xs-12">
         <div class="box">
             <div class="box-body">
@@ -85,8 +90,54 @@
     </div>
 </div>
 
+<form class="form-horizontal" method="post" action="@Url.Action("Exportar")">
+    <div id="mdlExportar" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Exportar</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Data do Pedido:</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="DataPedidoDe" name="DataPedidoDe">
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="DataPedidoAte" name="DataPedidoAte">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Vendedor:</label>
+                        <div class="col-sm-8">
+                            @Html.DropDownList("IdVendedor", null, "TODOS", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Status do Pedido:</label>
+                        <div class="col-sm-8">
+                            <select id="StatusPedido" name="StatusPedido" class="form-control">
+                                <option>TODOS</option>
+                                <option value="0">Aberto</option>
+                                <option value="1">Fechado</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary" id="btnExportar">Exportar</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</form>
+
 @section scripts {
     @Scripts.Render("~/bundles/datatables")
+    <script src="~/Scripts/input-mask/jquery.inputmask.js"></script>
+    <script src="~/Scripts/input-mask/jquery.inputmask.numeric.extensions.js"></script>
     <!-- page script -->
     <script>
         $(function () {
@@ -123,6 +174,17 @@
                     }
                 }
             });
+
+            $("#DataPedidoDe").datetimepicker({
+                locale: 'pt-BR',
+                format: 'L'
+            });
+
+            $("#DataPedidoAte").datetimepicker({
+                locale: 'pt-BR',
+                format: 'L'
+            });
+
         });
     </script>
 }

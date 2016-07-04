@@ -1,6 +1,23 @@
 ﻿@model EcWebApp.ViewModels.PrintPedidoInfo
 @{ Layout = null; }
 
+
+@helper FormataTelefone(string telefone)
+{
+if (string.IsNullOrEmpty(telefone))
+{  <span></span>
+}
+
+string novoTelefone = telefone.Replace("_", "");
+int posicaoTraco = novoTelefone.IndexOf('-');
+if (novoTelefone.Length == 14 && posicaoTraco > 9)
+{
+    novoTelefone = novoTelefone.Substring(0, posicaoTraco - 1) + "-"
+                 + novoTelefone.Substring(posicaoTraco - 1).Replace("-", "");
+}
+    @novoTelefone;
+}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -132,11 +149,11 @@
                             <tr>
                                 <td colspan="4">
                                     <small>Telefone</small><br />
-                                    @Html.DisplayFor(model => model.Pedido.Cliente.Telefone01)
+                                    @FormataTelefone(Model.Pedido.Cliente.Telefone01)
                                     @if (!string.IsNullOrEmpty(Model.Pedido.Cliente.Telefone02))
                                     {
                                         <span>&nbsp;/&nbsp;</span>
-                                        @Html.DisplayFor(model => model.Pedido.Cliente.Telefone02)
+                                        @FormataTelefone(Model.Pedido.Cliente.Telefone02)
                                     }
                                 </td>
                                 <td colspan="4">

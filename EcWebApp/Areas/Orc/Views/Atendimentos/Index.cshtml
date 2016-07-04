@@ -39,6 +39,9 @@
                                 @Html.DisplayNameFor(model => model.IdStatus)
                             </th>
                             <th>
+                                @Html.DisplayNameFor(model => model.StatusPlanta)
+                            </th>
+                            <th>
                                 @Html.DisplayNameFor(model => model.DataCadastro)
                             </th>
                             <th>
@@ -63,10 +66,10 @@
                                         @Html.DisplayFor(modelItem => item.EmailCliente)
                                         <br />
                                     }
-                                    @Html.DisplayFor(modelItem => item.Telefone01)
+                                    @item.Telefone01.Replace("_", "")
                                     @if (!string.IsNullOrEmpty(item.Telefone02))
                                     {
-                                        <br />@Html.DisplayFor(modelItem => item.Telefone02)
+                                        <br />@item.Telefone02.Replace("_", "")
                                     }
                                 </td>
                                 <td>
@@ -77,6 +80,9 @@
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.StatusAtendimento.Descricao)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StatusPlanta)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.DataCadastro)

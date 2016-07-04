@@ -11,7 +11,8 @@
 
 <div class="row">
     <div class="col-md-12">
-        @Html.ActionLink("Cadastrar Novo Cliente", "Create")
+        <a href="@Url.Action("Create")" class="btn btn-info btn-flat"><i class="glyphicon glyphicon-user"></i> Novo Cliente</a>
+        <button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#mdlExportar"><i class="glyphicon glyphicon-file"></i> Exportar</button>
     </div>
 </div>
 <div class="row">
@@ -57,10 +58,10 @@
                                         @Html.DisplayFor(modelItem => item.EmailCliente)
                                         <br />
                                     }
-                                    @Html.DisplayFor(modelItem => item.Telefone01)
+                                    @item.Telefone01.Replace("_", "")
                                     @if (!string.IsNullOrEmpty(item.Telefone02))
                                     {
-                                        <br />@Html.DisplayFor(modelItem => item.Telefone02)
+                                        <br />@item.Telefone02.Replace("_", "")
                                     }
                                 </td>
                                 <td>
@@ -86,6 +87,84 @@
         </div>
     </div>
 </div>
+
+<form class="form-horizontal" method="post" action="@Url.Action("Exportar")">
+    <div id="mdlExportar" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Exportar</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Data do Cadastro:</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="DataCadastroDe" name="DataCadastroDe">
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="DataCadastroAte" name="DataCadastroAte">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Vendedor:</label>
+                        <div class="col-sm-8">
+                            @Html.DropDownList("IdVendedor", null, "TODOS", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Interesse:</label>
+                        <div class="col-sm-8">
+                            <select id="Interesse" name="Interesse" class="form-control">
+                                <option>TODOS</option>
+                                <option value="1">Orçamento</option>
+                                <option value="2">Negociação</option>
+                                <option value="3">Fechamento</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Status de Atendimento:</label>
+                        <div class="col-sm-8">
+                            @Html.DropDownList("IdStatusAtendimento", null, "TODOS", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Status da Planta:</label>
+                        <div class="col-sm-8">
+                            <select id="StatusPlanta" name="StatusPlanta" class="form-control">
+                                <option>TODOS</option>
+                                <option value="0">Desenvolver</option>
+                                <option value="1">Em Desenvolvimento</option>
+                                <option value="2">Aguardando Aprovação</option>
+                                <option value="3">Em Revisão</option>
+                                <option value="4">Finalizada</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Procedência:</label>
+                        <div class="col-sm-8">
+                            <select id="IdProcedencia" name="IdProcedencia" class="form-control">
+                                <option>TODOS</option>
+                                <option value="1">Porta</option>
+                                <option value="2">Captação</option>
+                                <option value="3">ProCompra</option>
+                                <option value="4">Internet</option>
+                                <option value="5">Indicação</option>
+                                <option value="9">Outros</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary" id="btnExportar">Exportar</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</form>
 
 @section scripts {
     @Scripts.Render("~/bundles/datatables")
@@ -124,6 +203,17 @@
                     }
                 }
             });
+
+            $("#DataCadastroDe").datetimepicker({
+                locale: 'pt-BR',
+                format: 'L'
+            });
+
+            $("#DataCadastroAte").datetimepicker({
+                locale: 'pt-BR',
+                format: 'L'
+            });
+
         });
     </script>
 }

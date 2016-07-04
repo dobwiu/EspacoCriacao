@@ -10,6 +10,8 @@ using EcWebApp.DAL;
 using EcWebApp.Models;
 using EcWebApp.Controllers;
 using EcWebApp.ViewModels;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 
 namespace EcWebApp.Areas.Orc.Controllers
 {
@@ -26,9 +28,11 @@ namespace EcWebApp.Areas.Orc.Controllers
                                  .Where(s => s.Cliente.Interesse != EnumInteresse.SemInteresse)
                                  .OrderByDescending(o => o.NumeroPedido);
 
+            ViewBag.IdVendedor = new SelectList(new BLL.Usuario().ListarUsuarioCombo(), "IdUsuario", "NomeUsuario");
             return View(pedidoInfoes.ToList());
         }
 
+        #region CRUD..
         // GET: Orc/Pedidos/Create
         public ActionResult Create(Guid id)
         {
@@ -149,7 +153,9 @@ namespace EcWebApp.Areas.Orc.Controllers
         {
             return this.AlteraStatusPedido(id, EnumStatusPedido.Cancelado);
         }
+#endregion
 
+        #region Impressão..
         /// <summary>
         /// Exibe o Pedido para Impressão
         /// </summary>
@@ -183,6 +189,67 @@ namespace EcWebApp.Areas.Orc.Controllers
 
             return View("PrintContrato", printContrato);
         }
+        #endregion
+
+        #region Exportação..
+        public FileResult Exportar(ExportacaoInfo filtro)
+        {
+            string path = HttpContext.Server.MapPath("~/Content/modelos/ExportaPedidos.xlsx");
+            System.IO.FileInfo modeloXLS = new System.IO.FileInfo(path);
+
+            using (ExcelPackage xls = new ExcelPackage(modeloXLS))
+            {
+                var xlsPedidos = db.Pedidos.Include(c => c.Cliente).Include(v => v.Vendedor).Include(f => f.FormaPagamento);
+                #region Filtros..
+                if (filtro.DataPedidoDe.HasValue)
+                    xlsPedidos = xlsPedidos.Where(s => s.DataPedido >= filtro.DataPedidoDe.Value);
+
+                if (filtro.DataPedidoAte.HasValue)
+                {
+                    DateTime dtFinal = filtro.DataPedidoAte.Value.AddDays(1);
+                    xlsPedidos = xlsPedidos.Where(s => s.DataPedido < dtFinal);
+                }
+
+                if (filtro.IdVendedor.HasValue)
+                    xlsPedidos = xlsPedidos.Where(s => s.IdVendedor == filtro.IdVendedor.Value);
+
+                if (filtro.StatusPedido.HasValue)
+                    xlsPedidos = xlsPedidos.Where(s => s.StatusPedido == filtro.StatusPedido.Value);
+                #endregion
+                var xlsListaPedidos = xlsPedidos.OrderBy(o => o.NumeroPedido).ToList();
+
+                int linha = 6;
+                ExcelWorksheet ws = xls.Workbook.Worksheets["Pedidos"];
+                foreach (var item in xlsListaPedidos)
+                {
+                    ws.Cells[linha, 02].Value = item.NumeroPedido;
+                    ws.Cells[linha, 03].Value = item.Cliente.NomeCliente;
+                    ws.Cells[linha, 04].Value = item.DataPedido.ToShortDateString();
+                    ws.Cells[linha, 05].Value = item.Vendedor.NomeUsuario;
+                    ws.Cells[linha, 06].Value = item.DataParaEntrega;
+                    ws.Cells[linha, 07].Value = item.StatusPedido.ToString();
+                    ws.Cells[linha, 08].Value = item.ValorOrcamento;
+                    ws.Cells[linha, 09].Value = item.FormaPagamento.Descricao;
+                    ws.Cells[linha, 10].Value = item.CondicaoPagamento;
+                    ws.Cells[linha, 11].Value = item.ValorEntrada;
+                    ws.Cells[linha, 12].Value = item.NumeroParcelas;
+                    ws.Cells[linha, 13].Value = item.ValorPrazo;
+                    ws.Cells[linha, 14].Value = item.Observacoes;
+
+                    //ws.Cells[linha, 08].Style.Numberformat.Format = "#.##0,00";
+                    ws.Cells[linha, 08].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    //ws.Cells[linha, 11].Style.Numberformat.Format = "#.##0,00";
+                    ws.Cells[linha, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    //ws.Cells[linha, 13].Style.Numberformat.Format = "#.##0,00";
+                    ws.Cells[linha, 13].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    ws.Cells[linha, 14].Style.WrapText = true;
+                    linha++;
+                }
+
+                return File(xls.GetAsByteArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Pedidos.xlsx");
+            }
+        }
+        #endregion
 
         #region Private Methods..
         private string RetornaNumeroPedido()

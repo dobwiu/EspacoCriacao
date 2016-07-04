@@ -23,5 +23,19 @@ namespace EcWebApp.Controllers
         }
 
         //public PermissaoInfo Permissoes { get; set; }
+
+        public static string FormataTelefone(string telefone)
+        {
+            if (string.IsNullOrEmpty(telefone)) { return string.Empty; }
+
+            string novoTelefone = telefone.Replace("_", "");
+            int posicaoTraco = novoTelefone.IndexOf('-');
+            if (novoTelefone.Length == 14 && posicaoTraco > 9)
+            {
+                novoTelefone = novoTelefone.Substring(0, posicaoTraco - 1) + "-"
+                             + novoTelefone.Substring(posicaoTraco - 1).Replace("-", "");
+            }
+            return novoTelefone;
+        }
     }
 }
