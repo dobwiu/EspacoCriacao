@@ -146,6 +146,8 @@
     <Compile Include="Areas\Orc\Controllers\ClientesController.cs" />
     <Compile Include="Areas\Orc\Controllers\PedidosController.cs" />
     <Compile Include="Areas\Orc\OrcAreaRegistration.cs" />
+    <Compile Include="Areas\Reports\Controllers\RelDesempenhoController.cs" />
+    <Compile Include="Areas\Reports\ReportsAreaRegistration.cs" />
     <Compile Include="BLL\Pedido.cs" />
     <Compile Include="BLL\Usuario.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -232,22 +234,18 @@
     <Compile Include="Models\PedidoInfo.cs" />
     <Compile Include="Models\UsuarioInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reports\Contrato.aspx.cs">
-      <DependentUpon>Contrato.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Reports\Contrato.aspx.designer.cs">
-      <DependentUpon>Contrato.aspx</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\AccountInfo.cs" />
     <Compile Include="ViewModels\ArquivoProMobInfo.cs" />
     <Compile Include="ViewModels\DashboardInfo.cs" />
     <Compile Include="ViewModels\ExportacaoInfo.cs" />
     <Compile Include="ViewModels\PrintPedidoInfo.cs" />
+    <Compile Include="ViewModels\RelatorioDesempenhoInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Orc\Scripts\ngPedidos.js" />
     <Content Include="Content\AdminLTE.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\datatables\css\dataTables.bootstrap.css" />
@@ -520,9 +518,15 @@
     <Content Include="fonts\ionicons.woff" />
     <Content Include="Content\modelos\ExportaPedidos.xlsx" />
     <Content Include="Content\modelos\ExportaClientes.xlsx" />
+    <Content Include="Areas\Reports\Views\web.config" />
+    <Content Include="Areas\Reports\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Reports\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Reports\Views\RelDesempenho\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\RelDesempenho\pvRelDesempenho.cshtml" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Properties\PublishProfiles\EspacoCriacao - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
-    <Content Include="Reports\Contrato.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\datatables\dataTables.bootstrap.js" />

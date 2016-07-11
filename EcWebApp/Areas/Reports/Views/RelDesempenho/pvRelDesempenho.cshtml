@@ -1,0 +1,112 @@
+﻿@model IEnumerable<EcWebApp.ViewModels.RelatorioDesempenhoInfo>
+
+<div class="box box-info">
+    <div class="box-header">
+        <div class="form-group">
+            <label for="periodo" class="col-sm-1 control-label">Meta</label>
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <b>R$</b>
+                    </div>
+                    <input type="text" value="@ViewBag.Meta" readonly="readonly" />
+                </div>
+            </div>
+            <label for="IdVendedor" class="col-sm-1 control-label">Desafio</label>
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <b>R$</b>
+                    </div>
+                    <input type="text" value="@ViewBag.Desafio" readonly="readonly" />
+                </div>
+            </div>
+            <div class="col-sm-4">&nbsp;</div>
+        </div>
+    </div>
+    <div class="box-body">
+        <table id="tblClientes" class="table table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th rowspan="2">DATA</th>
+                    <th rowspan="2" style="text-align:center">ATENDIMENTOS</th>
+                    <th rowspan="2" style="text-align:center">PROCOMPRA</th>
+                    <th rowspan="2" style="text-align:center">PORTA</th>
+                    <th rowspan="2" style="text-align:center">OUTROS</th>
+                    <th colspan="2" style="text-align: center">APRESENTAÇÕES</th>
+                    <th colspan="2" style="text-align: center">PEDIDOS FECHADOS</th>
+                    <th colspan="2" style="text-align: center">ORÇAM. PERDIDOS</th>
+                </tr>
+                <tr>
+                    <th style="text-align: center">QTDE</th>
+                    <th style="text-align: center">VALOR</th>
+                    <th style="text-align: center">QTDE</th>
+                    <th style="text-align: center">VALOR</th>
+                    <th style="text-align: center">QTDE</th>
+                    <th style="text-align: right">VALOR</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    if (item.LinhaTotal == false)
+                    {
+                        if (!item.DiaUtil)
+                        {
+                            <tr class="warning">
+                                <td>@item.Data.ToShortDateString()</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>@item.Data.ToShortDateString()</td>
+                                <td style="text-align: right">@item.Atendimentos</td>
+                                <td style="text-align: right">@item.QtdProcompra</td>
+                                <td style="text-align: right">@item.QtdPorta</td>
+                                <td style="text-align: right">@item.QtdOutros</td>
+                                <td style="text-align: right">@item.QtdApresentacoes</td>
+                                <td style="text-align: right">R$ @item.ValorApresentacoes</td>
+                                <td style="text-align: right">@item.QtdPedidos</td>
+                                <td style="text-align: right">R$ @item.ValorPedidos</td>
+                                <td style="text-align: right">@item.QtdPerdidos</td>
+                                <td style="text-align: right">R$ @item.ValorPerdidos</td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+            <tfoot>
+                @foreach (var item in Model)
+                {
+                    if (item.LinhaTotal)
+                    {
+                        <tr class="info">
+                            <th>TOTAL</th>
+                            <th style="text-align: right">@item.Atendimentos</th>
+                            <th style="text-align: right">@item.QtdProcompra</th>
+                            <th style="text-align: right">@item.QtdPorta</th>
+                            <th style="text-align: right">@item.QtdOutros</th>
+                            <th style="text-align: right">@item.QtdApresentacoes</th>
+                            <th style="text-align: right">R$ @item.ValorApresentacoes</th>
+                            <th style="text-align: right">@item.QtdPedidos</th>
+                            <th style="text-align: right">R$ @item.ValorPedidos</th>
+                            <th style="text-align: right">@item.QtdPerdidos</th>
+                            <th style="text-align: right">R$ @item.ValorPerdidos</th>
+                        </tr>
+                    }
+                }
+            </tfoot>
+        </table>
+    </div>
+</div>
