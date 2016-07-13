@@ -13,13 +13,13 @@ namespace EcWebApp.Models
         [StringLength(50), Required]
         public string Descricao { get; set; }
 
-        [DataType(DataType.DateTime)]
+        [Display(Name = "Data de Abertura"), DataType(DataType.DateTime)]
         public DateTime DataAberturaConta { get; set; }
 
-        [DataType(DataType.Currency)]
+        [Display(Name = "Saldo Inicial"), DataType(DataType.Currency)]
         public Decimal? SaldoInicial { get; set; }
 
-        [DataType(DataType.Currency)]
+        [Display(Name = "Saldo Atual"), DataType(DataType.Currency)]
         public Decimal? SaldoAtual { get; set; }
 
         [DataType(DataType.DateTime)]

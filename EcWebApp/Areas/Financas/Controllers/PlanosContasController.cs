@@ -8,17 +8,18 @@ using System.Web;
 using System.Web.Mvc;
 using EcWebApp.DAL;
 using EcWebApp.Models;
+using EcWebApp.Controllers;
 
 namespace EcWebApp.Areas.Financas.Controllers
 {
-    public class PlanosContasController : Controller
+    public class PlanosContasController : _BaseController
     {
         private EspacoContext db = new EspacoContext();
 
         // GET: Financas/PlanosContas
         public ActionResult Index()
         {
-            var contas = db.Contas.Include(p => p.Usuario);
+            var contas = db.Contas.Include(p => p.Usuario).OrderBy(o => o.Descricao);
             return View(contas.ToList());
         }
 
@@ -40,8 +41,13 @@ namespace EcWebApp.Areas.Financas.Controllers
         // GET: Financas/PlanosContas/Create
         public ActionResult Create()
         {
-            ViewBag.IdUsuario = new SelectList(db.Usuarios, "IdUsuario", "NomeUsuario");
-            return View();
+            PlanoContaInfo conta = new Models.PlanoContaInfo()
+            {
+                DataAberturaConta = DateTime.Today,
+                IdUsuario = base.IdUsuario,
+                Ativo = true
+            };
+            return View(conta);
         }
 
         // POST: Financas/PlanosContas/Create
@@ -49,17 +55,19 @@ namespace EcWebApp.Areas.Financas.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdConta,Descricao,DataAberturaConta,SaldoInicial,SaldoAtual,DataUltimaAtualizacao,Ativo,IdUsuario")] PlanoContaInfo planoContaInfo)
+        public ActionResult Create(PlanoContaInfo planoContaInfo)
         {
             if (ModelState.IsValid)
             {
                 planoContaInfo.IdConta = Guid.NewGuid();
+                planoContaInfo.DataUltimaAtualizacao = planoContaInfo.DataAberturaConta;
+                planoContaInfo.SaldoAtual = planoContaInfo.SaldoInicial ?? 0;
+
                 db.Contas.Add(planoContaInfo);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdUsuario = new SelectList(db.Usuarios, "IdUsuario", "NomeUsuario", planoContaInfo.IdUsuario);
             return View(planoContaInfo);
         }
 
@@ -108,6 +116,8 @@ namespace EcWebApp.Areas.Financas.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.ExisteLancamento = db.Lancamentos.Where(s => s.IdConta == id.Value).Any();
             return View(planoContaInfo);
         }
 
@@ -122,6 +132,15 @@ namespace EcWebApp.Areas.Financas.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public ActionResult DesactiveConfirmed(int id)
+        {
+            PlanoContaInfo planoContaInfo = db.Contas.Find(id);
+            planoContaInfo.Ativo = false;
+            db.Entry(planoContaInfo).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

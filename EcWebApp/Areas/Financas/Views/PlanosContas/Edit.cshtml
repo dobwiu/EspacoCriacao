@@ -1,87 +1,99 @@
 ﻿@model EcWebApp.Models.PlanoContaInfo
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Contas";
+    ViewBag.SubTitle = "Edição";
 }
 
-<h2>Edit</h2>
+@section header {
+    <link rel="stylesheet" href="~/Content/iCheck/square/blue.css" />
+}
 
+<!-- form start -->
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>PlanoContaInfo</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.IdConta)
+    @Html.HiddenFor(model => model.IdConta)
+    @Html.HiddenFor(model => model.IdUsuario)
+    @Html.HiddenFor(model => model.DataUltimaAtualizacao)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Descricao, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    <div class="box">
+        <div class="box-body">
+            <div class="form">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DataAberturaConta, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DataAberturaConta, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DataAberturaConta, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "control-label" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.SaldoInicial, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SaldoInicial, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SaldoInicial, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SaldoAtual, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SaldoAtual, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SaldoAtual, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DataUltimaAtualizacao, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DataUltimaAtualizacao, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DataUltimaAtualizacao, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Ativo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Ativo)
-                    @Html.ValidationMessageFor(model => model.Ativo, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.Descricao, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.DataAberturaConta, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.DataAberturaConta, new { htmlAttributes = new { @class = "form-control", @readOnly = "readOnly" } })
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdUsuario, "IdUsuario", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("IdUsuario", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.IdUsuario, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SaldoInicial, htmlAttributes: new { @class = "control-label" })
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <b>R$</b>
+                                </div>
+                                @Html.EditorFor(model => model.SaldoInicial, new { htmlAttributes = new { @class = "form-control", @readOnly = "readOnly" } })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SaldoAtual, htmlAttributes: new { @class = "control-label" })
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <b>R$</b>
+                                </div>
+                                @Html.EditorFor(model => model.SaldoAtual, new { htmlAttributes = new { @class = "form-control", @readOnly = "readOnly" } })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        @Html.EditorFor(model => model.Ativo, new { htmlAttributes = new { @class = "square" } })
+                        &nbsp;
+                        @Html.LabelFor(model => model.Ativo, htmlAttributes: new { @class = "control-label" })
+                    </div>
+                </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+                <div class="form-group">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                </div>
+
+            </div> <!-- form -->
+        </div><!-- box-body -->
+        <div class="box-footer">
+            <input type="submit" value="Salvar" class="btn btn-primary" />
+            @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <!-- page script -->
+    <script>
+        $(function () {
+            $('input[type="checkbox"].square').iCheck({ checkboxClass: 'icheckbox_square-blue' });
+
+            var msg = "@ViewBag.MsgErro";
+            if (msg != "OK" && msg != "") {
+                bootbox.alert(msg);
+            }
+        });
+    </script>
+}

@@ -20,7 +20,7 @@ namespace EcWebApp.Areas.Financas.Controllers
         // GET: Financas/Categorias
         public ActionResult Index()
         {
-            return View(db.Categorias.ToList());
+            return View(db.Categorias.OrderBy(o=> o.Descricao).ToList());
         }
 
         // GET: Financas/Categorias/Details/5
@@ -41,7 +41,8 @@ namespace EcWebApp.Areas.Financas.Controllers
         // GET: Financas/Categorias/Create
         public ActionResult Create()
         {
-            return View();
+            CategoriaLancamentoInfo categoriaLancamentoInfo = new CategoriaLancamentoInfo() { Ativo = true };
+            return View(categoriaLancamentoInfo);
         }
 
         // POST: Financas/Categorias/Create
@@ -104,6 +105,8 @@ namespace EcWebApp.Areas.Financas.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.ExisteLancamento = db.Lancamentos.Where(s => s.IdCategoria == id.Value).Any();
             return View(categoriaLancamentoInfo);
         }
 
@@ -114,6 +117,17 @@ namespace EcWebApp.Areas.Financas.Controllers
         {
             CategoriaLancamentoInfo categoriaLancamentoInfo = db.Categorias.Find(id);
             db.Categorias.Remove(categoriaLancamentoInfo);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+
+        [HttpGet]
+        public ActionResult DesactiveConfirmed(int id)
+        {
+            CategoriaLancamentoInfo categoriaLancamentoInfo = db.Categorias.Find(id);
+            categoriaLancamentoInfo.Ativo = false;
+            db.Entry(categoriaLancamentoInfo).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

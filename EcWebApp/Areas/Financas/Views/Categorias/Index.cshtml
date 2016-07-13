@@ -1,45 +1,113 @@
 ﻿@model IEnumerable<EcWebApp.Models.CategoriaLancamentoInfo>
-
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Categorias de Lançamentos";
+    ViewBag.SubTitle = "Listagem";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Descricao)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TipoLancamento)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Ativo)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Descricao)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TipoLancamento)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ativo)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdCategoria }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdCategoria }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdCategoria })
-        </td>
-    </tr>
+@section header {
+    <link href="~/Content/datatables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
 }
 
-</table>
+<div class="row">
+    <div class="col-md-12">
+        @Html.ActionLink("Cadastrar Novo Item", "Create")
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-body">
+                <table id="tblCategoria" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width: 10px"></th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Descricao)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TipoLancamento)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Ativo)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="@Url.Action("Delete", new { id = item.IdCategoria })">
+                                        <i class="fa fa-remove text-red text-center"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    @Html.ActionLink(item.Descricao, "Edit", new { id = item.IdCategoria })
+                                </td>
+                                <td>
+                                    @if (item.TipoLancamento == EcWebApp.Models.EnumTipoLancamento.Credito)
+                                    {
+                                        <span>Crédito</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Débito</span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Ativo)
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/datatables")
+    <!-- page script -->
+
+    <script>
+        $(function () {
+            $('input[type="checkbox"]').iCheck({ checkboxClass: 'icheckbox_square-blue' });
+
+            $('#tblCategoria').DataTable({
+                "responsive": true,
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": false,
+                "info": true,
+                "autoWidth": false,
+                "language": {
+                    "sEmptyTable": "Nenhum registro encontrado",
+                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "_MENU_ resultados por página",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "sSearch": "Pesquisar",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    }
+                }
+            });
+        });
+    </script>
+}
