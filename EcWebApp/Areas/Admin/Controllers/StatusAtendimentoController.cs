@@ -41,7 +41,7 @@ namespace EcWebApp.Areas.Admin.Controllers
         // GET: Admin/StatusAtendimento/Create
         public ActionResult Create()
         {
-            StatusAtendimentoInfo statusAtendimentoInfo = new StatusAtendimentoInfo() { Ativo = true };
+            StatusAtendimentoInfo statusAtendimentoInfo = new StatusAtendimentoInfo() { Ativo = true, Apresentacao = false };
             return View(statusAtendimentoInfo);
         }
 
@@ -50,7 +50,7 @@ namespace EcWebApp.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdStatus,Descricao,TipoStatus,Ativo")] StatusAtendimentoInfo statusAtendimentoInfo)
+        public ActionResult Create(StatusAtendimentoInfo statusAtendimentoInfo)
         {
             if (ModelState.IsValid)
             {
@@ -74,6 +74,8 @@ namespace EcWebApp.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.IsAdmin = (bool)(IdUsuario == Guid.Empty);
             return View(statusAtendimentoInfo);
         }
 
@@ -82,7 +84,7 @@ namespace EcWebApp.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdStatus,Descricao,TipoStatus,Ativo")] StatusAtendimentoInfo statusAtendimentoInfo)
+        public ActionResult Edit(StatusAtendimentoInfo statusAtendimentoInfo)
         {
             if (ModelState.IsValid)
             {

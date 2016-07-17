@@ -7,6 +7,8 @@ namespace EcWebApp.ViewModels
 {
     public class RelatorioDesempenhoInfo
     {
+        public string Formato { get; set; }
+
         public DateTime Data { get; set; }
 
         public string Vendedor { get; set; }
@@ -42,6 +44,6 @@ namespace EcWebApp.ViewModels
                      + QtdOutros.GetValueOrDefault(0);
             }
         }
-        
+
     }
 }

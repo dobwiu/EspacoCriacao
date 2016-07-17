@@ -45,20 +45,11 @@
                                     @Html.ActionLink(item.Descricao, "Edit", new { id = item.IdCategoria })
                                 </td>
                                 <td>
-                                    @if (item.TipoLancamento == EcWebApp.Models.EnumTipoLancamento.Credito)
-                                    {
-                                        <span>Crédito</span>
-                                    }
-                                    else
-                                    {
-                                        <span>Débito</span>
-                                    }
+                                    @Html.DisplayFor(modelItem => item.TipoLancamento)
                                 </td>
-
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Ativo)
                                 </td>
-
                             </tr>
                         }
                     </tbody>

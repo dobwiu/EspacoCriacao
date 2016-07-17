@@ -85,6 +85,9 @@ namespace EcWebApp.Models
         public EnumTipoStatus TipoStatus { get; set; }
 
         public bool Ativo { get; set; }
+
+        // Indicativo de Desempenho
+        public bool? Apresentacao { get; set; }
     }
 
     #endregion
@@ -192,9 +195,9 @@ namespace EcWebApp.Models
 
     public enum EnumTipoLancamento : int
     {
-        [Display(Name = "Crédito")]
+        [Display(Name = "Recebimento")]
         Credito = 1,
-        [Display(Name = "Débito")]
+        [Display(Name = "Pagamento")]
         Debito = 2
     }
 

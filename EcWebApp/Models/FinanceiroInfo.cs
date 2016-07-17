@@ -14,6 +14,7 @@ namespace EcWebApp.Models
         public string Descricao { get; set; }
 
         [Display(Name = "Data de Abertura"), DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DataAberturaConta { get; set; }
 
         [Display(Name = "Saldo Inicial"), DataType(DataType.Currency)]
@@ -22,7 +23,8 @@ namespace EcWebApp.Models
         [Display(Name = "Saldo Atual"), DataType(DataType.Currency)]
         public Decimal? SaldoAtual { get; set; }
 
-        [DataType(DataType.DateTime)]
+        [Display(Name = "Última Atualização") DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DataUltimaAtualizacao { get; set; }
 
         public bool Ativo { get; set; }
@@ -93,6 +95,7 @@ namespace EcWebApp.Models
         [StringLength(50), Required]
         public string Descricao { get; set; }
 
+        [Display(Name = "Tipo de Lançamento")]
         public EnumTipoLancamento TipoLancamento { get; set; }
 
         public bool Ativo { get; set; }

@@ -225,6 +225,10 @@
     <Compile Include="Migrations\201607022225529_TipoContrato.Designer.cs">
       <DependentUpon>201607022225529_TipoContrato.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607162010236_StatusIndicativo.cs" />
+    <Compile Include="Migrations\201607162010236_StatusIndicativo.Designer.cs">
+      <DependentUpon>201607162010236_StatusIndicativo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AnexoInfo.cs" />
     <Compile Include="Models\AtendimentoInfo.cs" />
@@ -525,6 +529,7 @@
     <Content Include="Areas\Reports\Views\RelDesempenho\pvRelDesempenho.cshtml" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\modelos\RelDesempenho.xlsx" />
     <None Include="Properties\PublishProfiles\EspacoCriacao - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -643,6 +648,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607022225529_TipoContrato.resx">
       <DependentUpon>201607022225529_TipoContrato.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607162010236_StatusIndicativo.resx">
+      <DependentUpon>201607162010236_StatusIndicativo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

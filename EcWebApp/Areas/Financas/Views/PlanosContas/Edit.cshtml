@@ -63,10 +63,12 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group">
-                        @Html.EditorFor(model => model.Ativo, new { htmlAttributes = new { @class = "square" } })
-                        &nbsp;
-                        @Html.LabelFor(model => model.Ativo, htmlAttributes: new { @class = "control-label" })
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.EditorFor(model => model.Ativo, new { htmlAttributes = new { @class = "square" } })
+                            &nbsp;
+                            @Html.LabelFor(model => model.Ativo, htmlAttributes: new { @class = "control-label" })
+                        </div>
                     </div>
                 </div>
 

@@ -39,7 +39,7 @@ namespace EcWebApp.Migrations
               {
                   IdUsuario = Guid.Empty,
                   Vendas = EnumNivelAcesso.SomenteConsulta,
-                  Financeiro = EnumNivelAcesso.SemAcesso,
+                  Financeiro = EnumNivelAcesso.SomenteConsulta,
                   Relatorios = EnumNivelAcesso.SomenteConsulta,
                   Administrativo = EnumNivelAcesso.Administrador
               }

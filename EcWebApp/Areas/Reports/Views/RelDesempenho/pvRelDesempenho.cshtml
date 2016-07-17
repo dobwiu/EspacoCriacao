@@ -1,29 +1,6 @@
 ﻿@model IEnumerable<EcWebApp.ViewModels.RelatorioDesempenhoInfo>
 
 <div class="box box-info">
-    <div class="box-header">
-        <div class="form-group">
-            <label for="periodo" class="col-sm-1 control-label">Meta</label>
-            <div class="col-sm-3">
-                <div class="input-group">
-                    <div class="input-group-addon">
-                        <b>R$</b>
-                    </div>
-                    <input type="text" value="@ViewBag.Meta" readonly="readonly" />
-                </div>
-            </div>
-            <label for="IdVendedor" class="col-sm-1 control-label">Desafio</label>
-            <div class="col-sm-3">
-                <div class="input-group">
-                    <div class="input-group-addon">
-                        <b>R$</b>
-                    </div>
-                    <input type="text" value="@ViewBag.Desafio" readonly="readonly" />
-                </div>
-            </div>
-            <div class="col-sm-4">&nbsp;</div>
-        </div>
-    </div>
     <div class="box-body">
         <table id="tblClientes" class="table table-bordered table-condensed">
             <thead>
@@ -70,7 +47,16 @@
                         else
                         {
                             <tr>
-                                <td>@item.Data.ToShortDateString()</td>
+                                <td>
+                                    @if (item.Formato == "D")
+                                    {
+                                        <span>@item.Data.ToShortDateString()</span>
+                                    }
+                                    else
+                                    {
+                                        <span>@item.Data.ToString("MM/yyyy")</span>
+                                    }
+                                </td>
                                 <td style="text-align: right">@item.Atendimentos</td>
                                 <td style="text-align: right">@item.QtdProcompra</td>
                                 <td style="text-align: right">@item.QtdPorta</td>

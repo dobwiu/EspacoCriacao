@@ -10,15 +10,21 @@
         <form class="form-horizontal" method="post" action="@Url.Action("Exportar")">
             <div class="box-body">
                 <div class="form-group">
-                    <label for="periodo" class="col-sm-1 control-label">Período</label>
+                    <label for="Formato" class="col-sm-1 control-label">Formato</label>
                     <div class="col-sm-2">
-                        @Html.DropDownList("Periodo", null, "Selecione..", htmlAttributes: new { @class = "form-control" })
+                        <select id="Formato" name="Formato" class="form-control">
+                            <option value="D">Dias / Mês</option>
+                            <option value="M">Meses / Ano</option>
+                        </select>
+                    </div>
+                    <label for="Periodo" class="col-sm-1 control-label">Período</label>
+                    <div class="col-sm-2">
+                        <select id="Periodo" name="Periodo" class="form-control"></select>
                     </div>
                     <label for="IdVendedor" class="col-sm-1 control-label">Vendedor</label>
-                    <div class="col-sm-4">
+                    <div class="col-sm-5">
                         @Html.DropDownList("IdVendedor", null, "Todos", htmlAttributes: new { @class = "form-control" })
                     </div>
-                    <div class="col-sm-4">&nbsp;</div>
                 </div>
             </div>
             <!-- /.box-body -->
@@ -34,19 +40,36 @@
 <!-- Report Partial View -->
 <div class="row" id="divReport"></div>
 
-
 @section scripts {
     <script>
         $(function () {
+            $("#Formato").change(function () {
+                CarregaComboPeriodo();
+            });
+
             $("#btnVisualizar").click(function () {
                 $("#divReport").html("<span></span>");
+                var formato = $("#Formato").val();
                 var periodo = $("#Periodo").val();
                 var vendedor = $("#IdVendedor").val();
 
-                $.get('@Url.Action("Exibir")', { pPeriodo: periodo, pIdVendedor: vendedor }, function (result) {
+                $.get('@Url.Action("Exibir")', { pFormato: formato, pPeriodo: periodo, pIdVendedor: vendedor }, function (result) {
                     $("#divReport").html(result);
                 });
             });
+
+            CarregaComboPeriodo();
         });
+
+        function CarregaComboPeriodo() {
+            var opcao = $("#Formato").val();
+            $.getJSON('@Url.Action("ComboPeriodo")', { formato: opcao }, function (result) {
+                var $cboPeriodo = $("#Periodo");
+                $cboPeriodo.empty();
+                $.each(result, function (index, value) {
+                    $cboPeriodo.append($("<option></option>").attr("value", value).text(value));
+                });
+            });
+        }
     </script>
 }
