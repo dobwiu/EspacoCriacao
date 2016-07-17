@@ -248,6 +248,7 @@
   <ItemGroup>
     <Content Include="Areas\Orc\Scripts\ngPedidos.js" />
     <Content Include="Content\AdminLTE.css" />
+    <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -499,6 +500,8 @@
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\bootstrap-notify.js" />
+    <Content Include="Scripts\bootstrap-notify.min.js" />
     <Content Include="Scripts\icheck.js" />
     <Content Include="Scripts\icheck.min.js" />
     <Content Include="Scripts\input-mask\phone-codes\phone-be.json" />

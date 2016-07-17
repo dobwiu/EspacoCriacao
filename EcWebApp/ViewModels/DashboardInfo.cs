@@ -14,5 +14,7 @@ namespace EcWebApp.ViewModels
         public Decimal? ValorOrcamentos { get; set; }
 
         public Decimal? MetaVendas { get; set; }
+
+        public bool Atrasos { get; set; }
     }
 }

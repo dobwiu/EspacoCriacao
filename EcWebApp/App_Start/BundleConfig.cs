@@ -20,6 +20,7 @@ namespace EcWebApp
                       "~/Scripts/respond.js",
                       "~/Scripts/icheck.js",
                       "~/Scripts/bootbox.js",
+                      "~/Scripts/bootstrap-notify.js",
                       "~/Scripts/jquery.slimscroll.js",
                       "~/Scripts/moment-with-locales.js",
                       "~/Scripts/bootstrap-datetimepicker.js"));
@@ -37,6 +38,7 @@ namespace EcWebApp
                       "~/Content/bootstrap.css",
                       "~/Content/font-awesome.css",
                       "~/Content/ionicons.css",
+                      "~/Content/animate.css",
                       "~/Content/AdminLTE.css",
                       "~/Content/skins/skin-blue.css",
                       "~/Content/bootstrap-datetimepicker.css"));

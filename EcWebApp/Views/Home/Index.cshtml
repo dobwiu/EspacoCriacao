@@ -49,7 +49,7 @@
             <div class="inner">
                 @if (Model.ValorOrcamentos.HasValue)
                 {
-                <h3><sup style="font-size: 20px">R$</sup>@Model.ValorOrcamentos</h3>
+                    <h3><sup style="font-size: 20px">R$</sup>@Model.ValorOrcamentos</h3>
                 }
                 else
                 {
@@ -86,8 +86,31 @@
             <span class="small-box-footer">
                 Total dos Pedidos / Meta Estabelecida
             </span>
-        </span>
+        </div>
     </div>
     <!-- ./col -->
 </div>
 <!-- /.row -->
+
+@section scripts {
+    @if (Model.Atrasos)
+    {
+        <script>
+            $(function () {
+                $.notify({
+                    icon: "fa fa-exclamation-circle",
+                    title: "<strong>Atenção:</strong> ",
+                    message: "Existem agendamentos em atraso"
+                },
+                {
+                    type: "warning",
+                    placement: {
+                        from: "bottom",
+                        align: "right"
+                    }
+                }
+                );
+            });
+        </script>
+    }
+}

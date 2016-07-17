@@ -19,6 +19,7 @@ namespace EcWebApp.Controllers
             var lstClientes = db.Clientes.Where(s => s.DataCadastro.Month == DateTime.Today.Month && s.DataCadastro.Year == DateTime.Today.Year).ToList();
             dash.NovosClientes = lstClientes.Count();
             dash.Agendamentos = db.Clientes.Where(s => s.Interesse == Models.EnumInteresse.Orcamento).Count();
+            dash.Atrasos = db.Clientes.Where(s => s.DataProximoContato <= DateTime.Now).Any();
 
             try
             {

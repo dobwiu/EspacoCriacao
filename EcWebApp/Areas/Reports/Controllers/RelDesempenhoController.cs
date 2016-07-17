@@ -71,8 +71,8 @@ namespace EcWebApp.Areas.Reports.Controllers
                 ExcelWorksheet ws = xls.Workbook.Worksheets["Relatorio"];
                 //ExcelWorksheet ws = xls.Workbook.Worksheets.Add("Relatorio");
 
-                ws.Cells[3,3].Value = Vendedor;
-                ws.Cells[4,3].Value = DateTime.Today.ToShortDateString();
+                ws.Cells[3, 3].Value = Vendedor;
+                ws.Cells[4, 3].Value = DateTime.Today.ToShortDateString();
 
                 foreach (var item in relatorio)
                 {
@@ -145,12 +145,13 @@ namespace EcWebApp.Areas.Reports.Controllers
                 int anoPeriodo = Convert.ToInt32(periodo);
                 int mesInicial = (anoPeriodo == 2016) ? 5 : 1;
                 int mesAtual = DateTime.Today.Month;
+                int ultimoDia = DateTime.DaysInMonth(anoPeriodo, mesAtual);
 
                 periodoDe = new DateTime(anoPeriodo, mesInicial, 01);
-                periodoAte = new DateTime(anoPeriodo, mesAtual, 01);
+                periodoAte = new DateTime(anoPeriodo, mesAtual, ultimoDia, 23, 59, 59);
             }
 
-
+            //-- Buscando os clientes e pedidos do período..
             var clientes = db.Clientes.Include(c => c.StatusAtendimento).Where(s => s.DataCadastro >= periodoDe && s.DataCadastro < periodoAte).ToList();
             var pedidos = db.Pedidos.Where(s => s.DataPedido >= periodoDe && s.DataPedido < periodoAte).ToList();
 

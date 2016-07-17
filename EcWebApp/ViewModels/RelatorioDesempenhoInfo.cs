@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -21,14 +22,17 @@ namespace EcWebApp.ViewModels
 
         public int? QtdApresentacoes { get; set; }
 
+        [DataType(DataType.Currency)]
         public Decimal? ValorApresentacoes { get; set; }
 
         public int? QtdPedidos { get; set; }
 
+        [DataType(DataType.Currency)]
         public Decimal? ValorPedidos { get; set; }
 
         public int? QtdPerdidos { get; set; }
 
+        [DataType(DataType.Currency)]
         public Decimal? ValorPerdidos { get; set; }
 
         public bool DiaUtil { get; set; }
