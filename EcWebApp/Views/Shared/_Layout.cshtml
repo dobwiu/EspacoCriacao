@@ -85,10 +85,23 @@
                     </li>
                     @if (Request.Cookies["UserSettings"]["Relatorios"].ToString() != EcWebApp.Models.EnumNivelAcesso.SemAcesso.ToString())
                     {
-                        <li>
-                            <a href="@Url.Action("Index", "RelDesempenho", new { Area = "Reports" })">
-                                <i class="fa fa-print"></i> <span>Indic. de Desempenho</span>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-print"></i> <span>Relatórios</span>
+                                <i class="fa fa-angle-left pull-right"></i>
                             </a>
+                            <ul class="treeview-menu">
+                                <li>
+                                    <a href="@Url.Action("Index", "RelDesempenho", new { Area = "Reports" })">
+                                        <i class="fa fa-circle-o"></i> <span>Indic. de Desempenho</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "RelPerdidos", new { Area = "Reports" })">
+                                        <i class="fa fa-circle-o"></i> <span>Clientes Perdidos</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     }
                     @if (Request.Cookies["UserSettings"]["Financeiro"].ToString() != EcWebApp.Models.EnumNivelAcesso.SemAcesso.ToString())

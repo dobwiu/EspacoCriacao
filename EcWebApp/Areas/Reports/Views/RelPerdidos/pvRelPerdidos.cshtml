@@ -1,0 +1,44 @@
+﻿@model IEnumerable<EcWebApp.ViewModels.RelatorioPerdidosInfo>
+
+@{
+    int total = 0;
+}
+
+<div class="box box-info">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-5">
+                <table id="tblClientes" class="table table-bordered table-condensed">
+                    <colgroup>
+                        <col style="width: 80%" />
+                        <col style="width: 20%" />
+                    </colgroup>
+                    <thead>
+                        <tr class="info">
+                            <th style="text-align: center">MOTIVO</th>
+                            <th style="text-align: center">QTDE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Motivo</td>
+                                <td style="text-align: right">@item.Qtde</td>
+                            </tr>
+                            total += item.Qtde;
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr class="info">
+                            <th>TOTAL</th>
+                            <th style="text-align: right">@total</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="col-md-6">&nbsp;</div>
+        </div>
+    </div>
+</div>

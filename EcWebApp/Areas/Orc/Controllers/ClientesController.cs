@@ -22,15 +22,16 @@ namespace EcWebApp.Areas.Orc.Controllers
         private BLL.Usuario bllUsuario = new BLL.Usuario();
 
         // GET: Orc/Clientes
-        public ActionResult Index()
+        public ActionResult Index(bool? filtro = true)
         {
-            var clientes = db.Clientes.Include(c => c.Vendedor).Include(c => c.StatusAtendimento)
-                             .Where(s => s.Interesse != EnumInteresse.SemInteresse)
-                             .OrderByDescending(o => o.DataCadastro).ThenBy(a => a.NomeCliente);
+            var clientes = db.Clientes.Include(c => c.Vendedor).Include(c => c.StatusAtendimento);
+            if (filtro.GetValueOrDefault(true))
+                clientes = clientes.Where(s => s.Interesse != EnumInteresse.SemInteresse);
 
             ViewBag.IdVendedor = new SelectList(bllUsuario.ListarUsuarioCombo(), "IdUsuario", "NomeUsuario");
             ViewBag.IdStatusAtendimento = new SelectList(db.StatusAtendimento, "IdStatus", "Descricao");
-            return View(clientes.ToList());
+            ViewBag.Filtro = filtro;
+            return View(clientes.OrderByDescending(o => o.DataCadastro).ThenBy(a => a.NomeCliente).ToList());
         }
 
         // GET: Orc/Clientes/Details/5

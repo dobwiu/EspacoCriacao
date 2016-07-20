@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "Clientes";
     ViewBag.SubTitle = "Listagem";
+
+    string filtro = ((bool)ViewBag.Filtro ? "" : "checked");
 }
 
 @section header {
@@ -84,6 +86,12 @@
                     </tbody>
                 </table>
             </div>
+            <div class="box-footer">
+                <div class="form-group">
+                    <input type="checkbox" class="square" id="chkFiltro" @filtro />
+                    <label class="control-label">Listar clientes sem interesse</label>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -120,6 +128,7 @@
                                 <option value="1">Orçamento</option>
                                 <option value="2">Negociação</option>
                                 <option value="3">Fechamento</option>
+                                <option value="9">Sem Interesse</option>
                             </select>
                         </div>
                     </div>
@@ -212,6 +221,14 @@
             $("#DataCadastroAte").datetimepicker({
                 locale: 'pt-BR',
                 format: 'L'
+            });
+
+            $("#chkFiltro").click(function () {
+                if (this.checked) {
+                    window.location.href = '@Url.Action("Index","Clientes", new { filtro = "false"})';
+                } else {
+                    window.location.href = '@Url.Action("Index","Clientes")';
+                }
             });
 
         });

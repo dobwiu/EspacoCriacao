@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = "Clientes Perdidos";
+    ViewBag.SubTitle = "";
+}
+
+@section header {
+    <link href="~/Content/datepicker/daterangepicker-bs3.css" rel="stylesheet" />
+}
+
+<div class="row">
+    <!-- Horizontal Form -->
+    <div class="box box-info">
+        <!-- form start -->
+        <form class="form-horizontal" id="frmRelatorio" method="post" action="@Url.Action("Exportar")">
+            <div class="box-body">
+                <div class="row">
+                    <div class="form-group">
+                        <label for="Periodo" class="col-md-1 control-label">Período</label>
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar-o"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right active" id="Periodo" name="Periodo">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="button" id="btnVisualizar" class="btn btn-info">Visualizar</button>
+                            <button type="button" id="btnExportar" class="btn btn-info">Exportar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+        </form>
+    </div>
+</div>
+
+<!-- Report Partial View -->
+<div class="row" id="divReport"></div>
+
+@section scripts {
+    <script src="~/Scripts/datepicker/moment.min.js"></script>
+    <script src="~/Scripts/datepicker/daterangepicker.js"></script>
+    <script>
+        $(function () {
+            var start = moment().subtract(29, 'days');
+            var end = moment();
+
+            function cb(start, end) {
+                $('#Periodo span').html(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
+            }
+
+            //Date range picker
+            $('#Periodo').daterangepicker({
+                format: 'DD/MM/YYYY',
+                startDate: start,
+                endDate: end,
+                ranges: {
+                    'Hoje': [moment(), moment()],
+                    'Ontem': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Últimos 7 Dias': [moment().subtract(6, 'days'), moment()],
+                    'Últimos 30 Dias': [moment().subtract(29, 'days'), moment()],
+                    'Mês Atual': [moment().startOf('month'), moment().endOf('month')],
+                    'Último Mês': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                }
+            }, cb);
+
+            cb(start, end);
+
+            $("#btnVisualizar").click(function () {
+                $("#divReport").html("<span></span>");
+                var periodo = $("#Periodo").val();
+
+                if (periodo == "") {
+                    bootbox.alert("Informe um período!");
+                    return;
+                }
+
+                $.get('@Url.Action("Exibir")', { pPeriodo: periodo }, function (result) {
+                    $("#divReport").html(result);
+                });
+            });
+
+            $("#btnExportar").click(function () {
+                var periodo = $("#Periodo").val();
+
+                if (periodo == "") {
+                    bootbox.alert("Informe um período!");
+                    return;
+                } else {
+                    $("#frmRelatorio").submit();
+                }
+
+            });
+
+        });
+
+    </script>
+}
