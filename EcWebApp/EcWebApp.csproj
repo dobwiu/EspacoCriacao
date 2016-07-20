@@ -594,6 +594,7 @@
     <Content Include="Content\modelos\RelDesempenho.xlsx" />
     <Content Include="Areas\Reports\Views\RelPerdidos\Index.cshtml" />
     <Content Include="Areas\Reports\Views\RelPerdidos\pvRelPerdidos.cshtml" />
+    <Content Include="Content\modelos\RelPerdidos.xlsx" />
     <None Include="Properties\PublishProfiles\EspacoCriacao - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
