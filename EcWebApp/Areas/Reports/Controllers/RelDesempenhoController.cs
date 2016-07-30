@@ -12,6 +12,7 @@ using System.Web.Mvc;
 
 namespace EcWebApp.Areas.Reports.Controllers
 {
+    [Authorize]
     public class RelDesempenhoController : Controller
     {
         private EspacoContext db = new EspacoContext();

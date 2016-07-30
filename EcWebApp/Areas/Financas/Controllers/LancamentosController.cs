@@ -8,121 +8,164 @@ using System.Web;
 using System.Web.Mvc;
 using EcWebApp.DAL;
 using EcWebApp.Models;
+using EcWebApp.ViewModels;
+using EcWebApp.Controllers;
 
 namespace EcWebApp.Areas.Financas.Controllers
 {
-    public class LancamentosController : Controller
+    [Authorize]
+    public class LancamentosController : _BaseController
     {
         private EspacoContext db = new EspacoContext();
 
         // GET: Financas/Lancamentos
         public ActionResult Index()
         {
-            var lancamentos = db.Lancamentos.Include(l => l.Conta).Include(l => l.Usuario);
-            return View(lancamentos.ToList());
+            var contas = db.Contas.Where(s => s.Ativo).OrderBy(o => o.Descricao);
+            if (contas.Count() == 1)
+                return RedirectToAction("Details", new { id = contas.First().IdConta.Value });
+
+            /* Se houver mais que 1 conta, retorna lista para usuário selecionar.. */
+            return View(contas.ToList());
         }
 
         // GET: Financas/Lancamentos/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(Guid id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            LancamentoInfo lancamentoInfo = db.Lancamentos.Find(id);
-            if (lancamentoInfo == null)
-            {
-                return HttpNotFound();
-            }
-            return View(lancamentoInfo);
-        }
+            var conta = db.Contas.Find(id);
+            ViewBag.IdConta = conta.IdConta;
+            ViewBag.Title = conta.Descricao;
+            ViewBag.SubTitle = DateTime.Today.ToString("MM/yyyy");
 
-        // GET: Financas/Lancamentos/Create
-        public ActionResult Create()
-        {
-            ViewBag.IdConta = new SelectList(db.Contas, "IdConta", "Descricao");
-            ViewBag.IdUsuario = new SelectList(db.Usuarios, "IdUsuario", "NomeUsuario");
             return View();
         }
 
-        // POST: Financas/Lancamentos/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdLancamento,IdConta,TipoLancamento,Descricao,Valor,DataProcessamento,Processado,IdUsuario,DataLancamento")] LancamentoInfo lancamentoInfo)
+        private ExtratoInfo GerarExtrato(Guid idConta)
         {
-            if (ModelState.IsValid)
-            {
-                db.Lancamentos.Add(lancamentoInfo);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            DateTime inicioMes = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 01);
+            DateTime finalMes = inicioMes.AddMonths(1);
+            DateTime finalPeriodo = finalMes.AddMonths(2).AddDays(15);
 
-            ViewBag.IdConta = new SelectList(db.Contas, "IdConta", "Descricao", lancamentoInfo.IdConta);
-            ViewBag.IdUsuario = new SelectList(db.Usuarios, "IdUsuario", "NomeUsuario", lancamentoInfo.IdUsuario);
-            return View(lancamentoInfo);
+            var conta = db.Contas.Find(idConta);
+            var lancamentos = db.Lancamentos.Include(i=> i.Categoria)
+                                .Where(s => s.IdConta == idConta && s.DataProcessamento >= inicioMes && s.DataProcessamento < finalPeriodo)
+                                .OrderBy(o => o.DataProcessamento).ToList();
+
+
+            var extrato = new ExtratoInfo()
+            {
+                IdConta = idConta,
+                PeriodoDe = inicioMes,
+                PeriodoAte = finalMes,
+                SaldoAnterior = conta.SaldoAnterior.Value,
+                SaldoAtual = conta.SaldoAtual.Value
+            };
+
+            extrato.Lancamentos = lancamentos.Where(s => s.DataProcessamento <= DateTime.Now && s.Processado).OrderBy(o => o.DataProcessamento).ToList();
+            extrato.Recebimentos = lancamentos.Where(s => s.TipoLancamento == EnumTipoLancamento.Credito && s.Processado).Sum(v => v.Valor);
+            extrato.Pagamentos = lancamentos.Where(s => s.TipoLancamento == EnumTipoLancamento.Debito && s.Processado).Sum(v => v.Valor);
+            extrato.LancFuturos = lancamentos.Where(s => s.DataProcessamento >= DateTime.Now && !s.Processado).ToList();
+
+            return extrato;
         }
 
-        // GET: Financas/Lancamentos/Edit/5
-        public ActionResult Edit(int? id)
+        public JsonResult GetLancamentos(Guid id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            LancamentoInfo lancamentoInfo = db.Lancamentos.Find(id);
-            if (lancamentoInfo == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.IdConta = new SelectList(db.Contas, "IdConta", "Descricao", lancamentoInfo.IdConta);
-            ViewBag.IdUsuario = new SelectList(db.Usuarios, "IdUsuario", "NomeUsuario", lancamentoInfo.IdUsuario);
-            return View(lancamentoInfo);
+            return Json(this.GerarExtrato(id), JsonRequestBehavior.AllowGet);
         }
 
-        // POST: Financas/Lancamentos/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdLancamento,IdConta,TipoLancamento,Descricao,Valor,DataProcessamento,Processado,IdUsuario,DataLancamento")] LancamentoInfo lancamentoInfo)
+        public JsonResult ComboCategorias(EnumTipoLancamento tipo)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(lancamentoInfo).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.IdConta = new SelectList(db.Contas, "IdConta", "Descricao", lancamentoInfo.IdConta);
-            ViewBag.IdUsuario = new SelectList(db.Usuarios, "IdUsuario", "NomeUsuario", lancamentoInfo.IdUsuario);
-            return View(lancamentoInfo);
+            var itens = db.Categorias.Where(s => s.TipoLancamento == tipo).OrderBy(o => o.Descricao).ToList();
+            return Json(itens, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: Financas/Lancamentos/Delete/5
-        public ActionResult Delete(int? id)
+        public JsonResult AddLancamento(LancamentoInfo addLancamento)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            LancamentoInfo lancamentoInfo = db.Lancamentos.Find(id);
-            if (lancamentoInfo == null)
-            {
-                return HttpNotFound();
-            }
-            return View(lancamentoInfo);
-        }
+            Guid idConta = addLancamento.IdConta;
+            string descricao = addLancamento.Descricao;
 
-        // POST: Financas/Lancamentos/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            LancamentoInfo lancamentoInfo = db.Lancamentos.Find(id);
-            db.Lancamentos.Remove(lancamentoInfo);
+            addLancamento.Processado = (bool)(addLancamento.DataProcessamento <= DateTime.Now);
+            addLancamento.DataLancamento = DateTime.Now;
+            if (addLancamento.TipoLancamento == EnumTipoLancamento.Debito)
+            {
+                addLancamento.Valor *= -1;
+            }
+
+            if (addLancamento.Repeticao == EnumTipoRepeticao.Unico)
+                db.Lancamentos.Add(addLancamento);
+            else
+            {
+                //-- Primeira Parcela -->
+                addLancamento.Descricao = string.Format("{0} - 1/{1}", descricao, addLancamento.Vezes);
+                db.Lancamentos.Add(addLancamento);
+
+                DateTime proxData = addLancamento.DataProcessamento;
+                for (int i = 2; i <= addLancamento.Vezes; i++)
+                {
+                    switch (addLancamento.Repeticao)
+                    {
+                        case EnumTipoRepeticao.Semanal:
+                            proxData = proxData.AddDays(7);
+                            break;
+                        case EnumTipoRepeticao.Quinzenal:
+                            proxData = proxData.AddDays(15);
+                            break;
+                        case EnumTipoRepeticao.Mensal:
+                            proxData = proxData.AddMonths(1);
+                            break;
+                        case EnumTipoRepeticao.Anual:
+                            proxData = proxData.AddYears(1);
+                            break;
+                    }
+
+                    //-- Demais Parcelas -->
+                    var novoItem = new LancamentoInfo()
+                    {
+                        IdConta = idConta,
+                        TipoLancamento = addLancamento.TipoLancamento,
+                        IdCategoria = addLancamento.IdCategoria,
+                        Descricao = string.Format("{0} - {1}/{2}", descricao, i, addLancamento.Vezes),
+                        Valor = addLancamento.Valor,
+                        DataProcessamento = proxData,
+                        Processado = false,
+                        Comentario = addLancamento.Comentario,
+                        DataLancamento = DateTime.Now,
+                        IdUsuario = base.IdUsuario
+                    };
+
+                    db.Lancamentos.Add(novoItem);
+                }
+            }
+
+            if (addLancamento.Processado)
+            {
+                var conta = db.Contas.Find(addLancamento.IdConta);
+                conta.SaldoAtual += addLancamento.Valor;
+                db.Entry(conta).State = EntityState.Modified;
+            }
+
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return Json(this.GerarExtrato(idConta), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult DelLancamento(LancamentoInfo delLancamento)
+        {
+            Guid idConta = delLancamento.IdConta;
+
+            if (delLancamento.Processado)
+            {
+                delLancamento.Valor *= -1;
+                var conta = db.Contas.Find(idConta);
+                conta.SaldoAtual += delLancamento.Valor;
+                db.Entry(conta).State = EntityState.Modified;
+            }
+
+            var lancamento = db.Lancamentos.Find(delLancamento.IdLancamento);
+            db.Lancamentos.Remove(lancamento);
+            db.SaveChanges();
+
+            return Json(this.GerarExtrato(idConta), JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

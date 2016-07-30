@@ -107,8 +107,8 @@ namespace EcWebApp.Controllers
             Response.Cookies["UserSettings"]["LoginUsuario"] = pUsuario.LoginUsuario;
             Response.Cookies["UserSettings"]["NomeUsuario"] = pUsuario.NomeUsuario;
 
-            Response.Cookies["UserSettings"]["Relatorios"] = pUsuario.Permissoes.Relatorios.ToString(); // EnumNivelAcesso.SemAcesso.ToString(); 
-            Response.Cookies["UserSettings"]["Financeiro"] = EnumNivelAcesso.SemAcesso.ToString(); // pUsuario.Permissoes.Financeiro.ToString(); 
+            Response.Cookies["UserSettings"]["Relatorios"] = pUsuario.Permissoes.Relatorios.ToString();
+            Response.Cookies["UserSettings"]["Financeiro"] = pUsuario.Permissoes.Financeiro.ToString(); // EnumNivelAcesso.SemAcesso.ToString(); 
             Response.Cookies["UserSettings"]["Administrativo"] = pUsuario.Permissoes.Administrativo.ToString();
 
             Response.Cookies["UserSettings"].Expires = DateTime.Now.AddDays(1d);

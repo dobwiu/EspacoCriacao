@@ -153,7 +153,7 @@ namespace EcWebApp.Areas.Orc.Controllers
         {
             return this.AlteraStatusPedido(id, EnumStatusPedido.Cancelado);
         }
-#endregion
+        #endregion
 
         #region Impressão..
         /// <summary>
@@ -165,7 +165,7 @@ namespace EcWebApp.Areas.Orc.Controllers
             {
                 Pedido = db.Pedidos.Include(c => c.Cliente).Include(v => v.Vendedor).Include(f => f.FormaPagamento).Where(s => s.IdPedido == id).First(),
                 Ambientes = db.Ambientes.Where(s => s.IdPedido == id).OrderBy(o => o.Item).ToList(),
-                Parcelas = db.Parcelas.Where(p=> p.IdPedido == id).ToList()
+                Parcelas = db.Parcelas.Where(p => p.IdPedido == id).ToList()
             };
 
             //-- Endereço de Entrega -->

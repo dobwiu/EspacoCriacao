@@ -230,6 +230,10 @@
     <Compile Include="Migrations\201607162010236_StatusIndicativo.Designer.cs">
       <DependentUpon>201607162010236_StatusIndicativo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607280052517_Lancamentos.cs" />
+    <Compile Include="Migrations\201607280052517_Lancamentos.Designer.cs">
+      <DependentUpon>201607280052517_Lancamentos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AnexoInfo.cs" />
     <Compile Include="Models\AtendimentoInfo.cs" />
@@ -243,11 +247,13 @@
     <Compile Include="ViewModels\ArquivoProMobInfo.cs" />
     <Compile Include="ViewModels\DashboardInfo.cs" />
     <Compile Include="ViewModels\ExportacaoInfo.cs" />
+    <Compile Include="ViewModels\ExtratoInfo.cs" />
     <Compile Include="ViewModels\PrintPedidoInfo.cs" />
     <Compile Include="ViewModels\RelatorioDesempenhoInfo.cs" />
     <Compile Include="ViewModels\RelatorioPerdidosInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Financas\Scripts\ngLancamentos.js" />
     <Content Include="Areas\Orc\Scripts\ngPedidos.js" />
     <Content Include="Content\AdminLTE.css" />
     <Content Include="Content\animate.css" />
@@ -468,10 +474,7 @@
     <Content Include="Areas\Financas\Views\PlanosContas\Details.cshtml" />
     <Content Include="Areas\Financas\Views\PlanosContas\Edit.cshtml" />
     <Content Include="Areas\Financas\Views\PlanosContas\Index.cshtml" />
-    <Content Include="Areas\Financas\Views\Lancamentos\Create.cshtml" />
-    <Content Include="Areas\Financas\Views\Lancamentos\Delete.cshtml" />
     <Content Include="Areas\Financas\Views\Lancamentos\Details.cshtml" />
-    <Content Include="Areas\Financas\Views\Lancamentos\Edit.cshtml" />
     <Content Include="Areas\Financas\Views\Lancamentos\Index.cshtml" />
     <Content Include="Areas\Orc\Views\web.config" />
     <Content Include="Areas\Orc\Views\_ViewStart.cshtml" />
@@ -716,6 +719,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607162010236_StatusIndicativo.resx">
       <DependentUpon>201607162010236_StatusIndicativo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607280052517_Lancamentos.resx">
+      <DependentUpon>201607280052517_Lancamentos.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

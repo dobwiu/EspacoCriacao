@@ -38,7 +38,7 @@ namespace EcWebApp.DAL
         //public DbSet<AnexoInfo> Anexos { get; set; }
 
         public DbSet<PedidoInfo> Pedidos { get; set; }
-        public DbSet<AmbienteInfo> Ambientes {get; set;}
+        public DbSet<AmbienteInfo> Ambientes { get; set; }
         //public DbSet<PedidoObservacaoInfo> PedidoObservacoes { get; set; }
         public DbSet<ItemProMobInfo> ItensProMob { get; set; }
         public DbSet<ParcelaInfo> Parcelas { get; set; }
@@ -46,6 +46,7 @@ namespace EcWebApp.DAL
         public DbSet<PlanoContaInfo> Contas { get; set; }
         public DbSet<LancamentoInfo> Lancamentos { get; set; }
         public DbSet<CategoriaLancamentoInfo> Categorias { get; set; }
+        public DbSet<FechamentoInfo> Fechamentos { get; set; }
 
         #endregion
     }

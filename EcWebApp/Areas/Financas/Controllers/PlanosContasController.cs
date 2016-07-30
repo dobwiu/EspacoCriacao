@@ -12,6 +12,7 @@ using EcWebApp.Controllers;
 
 namespace EcWebApp.Areas.Financas.Controllers
 {
+    [Authorize]
     public class PlanosContasController : _BaseController
     {
         private EspacoContext db = new EspacoContext();
@@ -61,6 +62,7 @@ namespace EcWebApp.Areas.Financas.Controllers
             {
                 planoContaInfo.IdConta = Guid.NewGuid();
                 planoContaInfo.DataUltimaAtualizacao = planoContaInfo.DataAberturaConta;
+                planoContaInfo.SaldoAnterior = planoContaInfo.SaldoInicial ?? 0;
                 planoContaInfo.SaldoAtual = planoContaInfo.SaldoInicial ?? 0;
 
                 db.Contas.Add(planoContaInfo);

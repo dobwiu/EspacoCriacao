@@ -201,21 +201,15 @@ namespace EcWebApp.Models
         Debito = 2
     }
 
-    /*  public enum EnumFormaPagamento : int
-        {
-            Boleto,
-            [Display(Name = "Cartão de Crédito")]
-            CartaoCredito,
-            [Display(Name = "Cartão de Débito")]
-            CartaoDebito,
-            [Display(Name = "Cheque")]
-            Cheque,
-            ConstruCard,
-            [Display(Name = "Débito em Conta")]
-            DebitoEmConta,
-            Dinheiro,
-            Financiamento
-        } */
+    public enum EnumTipoRepeticao : int
+    {
+        Unico = 0,
+        Semanal = 1,
+        Quinzenal = 2,
+        Mensal = 3,
+        Anual = 4
+    }
+
     #endregion
 
     //[Display(ResourceType = typeof(Resources.Anexo.Model), Name = "FileName_DisplayName")]

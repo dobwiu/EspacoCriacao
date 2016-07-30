@@ -20,6 +20,9 @@ namespace EcWebApp.Models
         [Display(Name = "Saldo Inicial"), DataType(DataType.Currency)]
         public Decimal? SaldoInicial { get; set; }
 
+        [Display(Name = "Saldo Anterior"), DataType(DataType.Currency)]
+        public Decimal? SaldoAnterior { get; set; }
+
         [Display(Name = "Saldo Atual"), DataType(DataType.Currency)]
         public Decimal? SaldoAtual { get; set; }
 
@@ -73,6 +76,12 @@ namespace EcWebApp.Models
         [DataType(DataType.DateTime), Required]
         public DateTime DataLancamento { get; set; }
 
+        [NotMapped]
+        public EnumTipoRepeticao Repeticao { get; set; }
+
+        [NotMapped]
+        public int? Vezes { get; set; }
+
         #region Propriedades de Navegação..
         [ForeignKey("IdConta")]
         public PlanoContaInfo Conta { get; set; }
@@ -83,6 +92,24 @@ namespace EcWebApp.Models
         [ForeignKey("IdUsuario")]
         public UsuarioInfo Usuario { get; set; }
         #endregion
+
+        [NotMapped]
+        public string DataFormatada
+        {
+            get
+            {
+                return DataProcessamento.ToShortDateString();
+            }
+        }
+
+        [NotMapped]
+        public string ClasseCSS
+        {
+            get
+            {
+                return (TipoLancamento == EnumTipoLancamento.Credito ? "text-black" : "text-red");
+            }
+        }
     }
 
     [Table("CategoriasLancamento", Schema = "fin")]
@@ -99,5 +126,23 @@ namespace EcWebApp.Models
         public EnumTipoLancamento TipoLancamento { get; set; }
 
         public bool Ativo { get; set; }
+    }
+
+    [Table("Fechamentos", Schema = "fin")]
+    public class FechamentoInfo
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int IdFechamento { get; set; }
+
+        public Guid IdConta { get; set; }
+
+        [DataType(DataType.DateTime), Required]
+        public DateTime DataFechamento { get; set; }
+
+        [DataType(DataType.Currency), Required]
+        public decimal ValorFechamento { get; set; }
+
+        [ForeignKey("IdConta")]
+        public PlanoContaInfo Conta { get; set; }
     }
 }
