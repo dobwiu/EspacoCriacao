@@ -129,7 +129,6 @@
                                         <li><a href="@Url.Action("Index", "StatusAtendimento", new { Area = "Admin" })"><i class="fa fa-circle-o"></i> Status de Atendimento</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="@Url.Action("Index", "Usuarios", new { Area = "Admin" })"><i class="fa fa-user"></i> Cadastro de Usuários</a></li>
                                 @if (Request.Cookies["UserSettings"]["Financeiro"].ToString() == EcWebApp.Models.EnumNivelAcesso.Administrador.ToString())
                                 {
                                     <li>
@@ -140,7 +139,16 @@
                                         </ul>
                                     </li>
                                 }
+                                <li><a href="@Url.Action("Index", "Usuarios", new { Area = "Admin" })"><i class="fa fa-user"></i> Cadastro de Usuários</a></li>
                             </ul>
+                        </li>
+                    }
+                    @if (Request.Cookies["UserSettings"]["IdUsuario"].ToString() == Guid.Empty.ToString())
+                    {
+                        <li>
+                            <a href="@Url.Action("JobContas", "Lancamentos", new { Area = "Financas" })">
+                                <i class="glyphicon glyphicon-saved text-green"></i> <span>JobContas</span>
+                            </a>
                         </li>
                     }
                 </ul>

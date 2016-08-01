@@ -18,73 +18,82 @@
     <div class="col-xs-12">
         <div class="box">
             <div class="box-body">
-                <table id="tblPedidos" class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.NumeroPedido)
-                            </th>
-                            <th>
-                                Cliente
-                            </th>
-                            <th>
-                                Vendedor
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.DataPedido)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.PrazoEntrega)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.StatusPedido)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.ValorOrcamento)
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        @foreach (var item in Model)
-                        {
+                <div class="table-responsive">
+                    <table id="tblPedidos" class="table table-bordered table-striped">
+                        <thead>
                             <tr>
-                                <td>
-                                    @Html.ActionLink(item.NumeroPedido, "Edit", new { id = item.IdPedido })
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Cliente.NomeCliente)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Vendedor.NomeUsuario)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DataPedido)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.PrazoEntrega)
-                                </td>
-                                <td class="text-center">
-                                    @if (item.StatusPedido == EcWebApp.Models.EnumStatusPedido.Aberto)
-                                    {
-                                        <span class="label label-warning">EM ABERTO</span>
-                                    }
-                                    else if (item.StatusPedido == EcWebApp.Models.EnumStatusPedido.Fechado)
-                                    {
-                                        <span class="label label-success">FECHADO</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="label label-danger">CANCELADO</span>
-                                    }
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ValorOrcamento)
-                                </td>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.NumeroPedido)
+                                </th>
+                                <th>
+                                    Cliente
+                                </th>
+                                <th>
+                                    Vendedor
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.DataPedido)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.PrazoEntrega)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.StatusPedido)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ValorOrcamento)
+                                </th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (item.StatusPedido != EcWebApp.Models.EnumStatusPedido.Cancelado)
+                                        {
+                                            @Html.ActionLink(item.NumeroPedido, "Edit", new { id = item.IdPedido })
+                                        }
+                                        else
+                                        {
+                                            @Html.DisplayFor(modelItem => item.NumeroPedido)
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Cliente.NomeCliente)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Vendedor.NomeUsuario)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DataPedido)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PrazoEntrega)
+                                    </td>
+                                    <td class="text-center">
+                                        @if (item.StatusPedido == EcWebApp.Models.EnumStatusPedido.Aberto)
+                                        {
+                                            <span class="label label-warning">EM ABERTO</span>
+                                        }
+                                        else if (item.StatusPedido == EcWebApp.Models.EnumStatusPedido.Fechado)
+                                        {
+                                            <span class="label label-success">FECHADO</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="label label-danger">CANCELADO</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ValorOrcamento)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

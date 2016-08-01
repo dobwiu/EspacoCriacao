@@ -1,10 +1,6 @@
 ﻿@{
-    //ViewBag.Title = "Conta XXX";
-    //ViewBag.SubTitle = "periodo";
-}
-
-@section header {
-    <link rel="stylesheet" href="~/Content/iCheck/minimal/blue.css" />
+//ViewBag.Title = "Conta XXX";
+//ViewBag.SubTitle = "periodo";
 }
 
 <div ng-controller="financasCtrl">
@@ -33,6 +29,9 @@
                         </tr>
                     </table>
                 </div>
+                <div class="box-footer">
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#mdlExportacao"><i class="glyphicon glyphicon-file"></i> Exportar</button>
+                </div>
             </div>
             <!-- /.box -->
             <!-- Custom Tabs -->
@@ -45,8 +44,9 @@
                     <div class="tab-pane active" id="tab_1">
                         <table class="table table-striped table-bordered table-condensed">
                             <colgroup>
+                                <col width="05%" />
                                 <col width="15%" />
-                                <col width="65%" />
+                                <col width="60%" />
                                 <col width="20%" />
                             </colgroup>
                             <thead>
@@ -58,6 +58,11 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="item in extrato.Lancamentos">
+                                    <td style="text-align: center">
+                                        <a ng-click="DelLancamento(item)" data-toggle="tooltip" title="Excluir Lançamento">
+                                            <i class="fa fa-remove text-red"></i>
+                                        </a>
+                                    </td>
                                     <td>{{item.DataFormatada}}</td>
                                     <td>
                                         <span style="font-size:10px">{{item.Categoria.Descricao}}</span><br />
@@ -88,7 +93,7 @@
                             <tbody>
                                 <tr ng-repeat="item in extrato.LancFuturos">
                                     <td style="text-align: center">
-                                        <a ng-click="DelLancamentos(item)" data-toggle="tooltip" title="Excluir Lançamento">
+                                        <a ng-click="DelLancamento(item)" data-toggle="tooltip" title="Excluir Lançamento">
                                             <i class="fa fa-remove text-red"></i>
                                         </a>
                                     </td>
@@ -214,10 +219,52 @@
     <!-- /.row -->
 </div>
 
+<form method="post" action="@Url.Action("Exportar")">
+    <input type="hidden" id="IdConta" name="IdConta" value="@ViewBag.IdConta" />
+    <div id="mdlExportacao" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Lançamentos</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="Periodo" class="col-md-2 control-label">Período</label>
+                            <div class="col-md-5">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar-o"></i>
+                                    </div>
+                                    <input type="text" class="form-control" id="periodoDe" name="periodoDe">
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar-o"></i>
+                                    </div>
+                                    <input type="text" class="form-control" id="periodoAte" name="periodoAte">
+                                </div>
+                            </div>
+                        </div><!-- form-group -->
+                    </div><!-- row -->
+                </div><!-- modal-body -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary" title="Exportar">Exportar</button>
+                </div><!-- modal-footer -->
+            </div><!-- modal-content -->
+        </div><!-- modal-dialog -->
+    </div><!-- modal -->
+</form>
+
 @section scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/angular.min.js"></script>
     <script src="~/Areas/Financas/Scripts/ngLancamentos.js"></script>
+
     <!-- page script -->
     <script>
         $(function () {
@@ -227,6 +274,16 @@
             //});
 
             $("#DataProcessamento").datetimepicker({
+                locale: 'pt-BR',
+                format: 'L'
+            });
+
+            $("#periodoDe").datetimepicker({
+                locale: 'pt-BR',
+                format: 'L'
+            });
+
+            $("#periodoAte").datetimepicker({
                 locale: 'pt-BR',
                 format: 'L'
             });

@@ -1,75 +1,95 @@
-﻿@model IEnumerable<EcWebApp.Models.LancamentoInfo>
+﻿@model IEnumerable<EcWebApp.Models.PlanoContaInfo>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Contas";
+    ViewBag.SubTitle = "Listagem";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Conta.Descricao)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Usuario.NomeUsuario)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TipoLancamento)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Descricao)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Valor)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DataProcessamento)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Processado)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DataLancamento)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Conta.Descricao)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Usuario.NomeUsuario)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TipoLancamento)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Descricao)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Valor)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DataProcessamento)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Processado)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DataLancamento)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdLancamento }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdLancamento }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdLancamento })
-        </td>
-    </tr>
+@section header {
+    <link href="~/Content/datatables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
 }
 
-</table>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-body">
+                <table id="tblContas" class="table table-bordered table-striped">
+                    <colgroup>
+                        <col style="width: auto" />
+                        <col style="width: 200px;" />
+                        <col style="width: 150px;" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Descricao)
+                            </th>
+                            <th style="text-align: center;">
+                                @Html.DisplayNameFor(model => model.SaldoAtual)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Descricao)
+                                </td>
+                                <td style="text-align: right;">
+                                    @Html.DisplayFor(modelItem => item.SaldoAtual)
+                                </td>
+                                <td style="text-align: center;">
+                                    @Html.ActionLink("Lançamentos", "Details", new { id = item.IdConta }, new { @class = "btn btn-info btn-sm" })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/datatables")
+    <!-- page script -->
+
+    <script>
+        $(function () {
+            $('#tblContas').DataTable({
+                "responsive": true,
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": false,
+                "info": true,
+                "autoWidth": false,
+                "language": {
+                    "sEmptyTable": "Nenhum registro encontrado",
+                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "_MENU_ resultados por página",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "sSearch": "Pesquisar",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    }
+                }
+            });
+        });
+    </script>
+}

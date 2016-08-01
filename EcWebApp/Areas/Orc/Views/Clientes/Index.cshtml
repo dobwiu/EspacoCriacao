@@ -21,70 +21,72 @@
     <div class="col-xs-12">
         <div class="box">
             <div class="box-body">
-                <table id="tblClientes" class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>
-                                Cliente
-                            </th>
-                            <th>
-                                Contato
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Interesse)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.ValorEstimadoProjeto)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.IdStatus)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.IdVendedor)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.DataUltimoContato)
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
+                <div class="table-responsive">
+                    <table id="tblClientes" class="table table-bordered table-striped">
+                        <thead>
                             <tr>
-                                <td>
-                                    @Html.ActionLink(item.NomeCliente, "Edit", new { id = item.IdCliente })
-                                </td>
-                                <td>
-                                    @if (!string.IsNullOrEmpty(item.EmailCliente))
-                                    {
-                                        @Html.DisplayFor(modelItem => item.EmailCliente)
-                                        <br />
-                                    }
-                                    @item.Telefone01.Replace("_", "")
-                                    @if (!string.IsNullOrEmpty(item.Telefone02))
-                                    {
-                                        <br />@item.Telefone02.Replace("_", "")
-                                    }
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Interesse)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ValorEstimadoProjeto)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.StatusAtendimento.Descricao)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Vendedor.NomeUsuario)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DataUltimoContato)
-                                </td>
+                                <th>
+                                    Cliente
+                                </th>
+                                <th>
+                                    Contato
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Interesse)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ValorEstimadoProjeto)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.IdStatus)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.IdVendedor)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.DataUltimoContato)
+                                </th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.ActionLink(item.NomeCliente, "Edit", new { id = item.IdCliente })
+                                    </td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.EmailCliente))
+                                        {
+                                            @Html.DisplayFor(modelItem => item.EmailCliente)
+                                            <br />
+                                        }
+                                        @item.Telefone01.Replace("_", "")
+                                        @if (!string.IsNullOrEmpty(item.Telefone02))
+                                        {
+                                            <br />@item.Telefone02.Replace("_", "")
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Interesse)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ValorEstimadoProjeto)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.StatusAtendimento.Descricao)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Vendedor.NomeUsuario)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DataUltimoContato)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="box-footer">
                 <div class="form-group">

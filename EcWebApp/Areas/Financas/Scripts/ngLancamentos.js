@@ -52,7 +52,7 @@ app.controller("financasCtrl", function ($scope, $http) {
     }
 
     //chama o método ExcluirLancamento do controlador
-    $scope.DeletaLancamento = function (lancamento) {
+    $scope.DelLancamento = function (lancamento) {
         $http.post('/Financas/Lancamentos/DelLancamento/', { delLancamento: lancamento })
         .success(function (result) {
             $scope.extrato = result;

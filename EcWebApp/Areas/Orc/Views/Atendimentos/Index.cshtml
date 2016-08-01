@@ -20,94 +20,96 @@
     <div class="col-xs-12">
         <div class="box">
             <div class="box-body">
-                <table id="tblAgenda" class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>
-                                Cliente
-                            </th>
-                            <th>
-                                Contato
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.ValorEstimadoProjeto)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.IdVendedor)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.IdStatus)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.StatusPlanta)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.DataCadastro)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.DataPrimeiroContato)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.DataProximoContato)
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
+                <div class="table-responsive">
+                    <table id="tblAgenda" class="table table-bordered table-striped">
+                        <thead>
                             <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.NomeCliente)
-                                </td>
-                                <td>
-                                    @if (!string.IsNullOrEmpty(item.EmailCliente))
-                                    {
-                                        @Html.DisplayFor(modelItem => item.EmailCliente)
-                                        <br />
-                                    }
-                                    @item.Telefone01.Replace("_", "")
-                                    @if (!string.IsNullOrEmpty(item.Telefone02))
-                                    {
-                                        <br />@item.Telefone02.Replace("_", "")
-                                    }
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ValorEstimadoProjeto)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Vendedor.NomeUsuario)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.StatusAtendimento.Descricao)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.StatusPlanta)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DataCadastro)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DataPrimeiroContato)
-                                </td>
-                                <td>
-                                    @if (item.DataProximoContato.HasValue && (item.DataProximoContato.Value < DateTime.Today))
-                                    {
-                                        <span class="text-red">@Html.DisplayFor(modelItem => item.DataProximoContato)</span>
-                                        <i class="fa fa-exclamation-triangle text-red" title="Atrasado"></i>
-                                    }
-                                    else
-                                    {
-                                        @Html.DisplayFor(modelItem => item.DataProximoContato)
-                                    }
-                                </td>
-                                <td>
-                                    @Html.ActionLink("Registrar Contato", "Create", new { idCliente = item.IdCliente }, new { @class = "btn btn-info btn-sm" })
-                                </td>
+                                <th>
+                                    Cliente
+                                </th>
+                                <th>
+                                    Contato
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ValorEstimadoProjeto)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.IdVendedor)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.IdStatus)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.StatusPlanta)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.DataCadastro)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.DataPrimeiroContato)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.DataProximoContato)
+                                </th>
+                                <th></th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NomeCliente)
+                                    </td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.EmailCliente))
+                                        {
+                                            @Html.DisplayFor(modelItem => item.EmailCliente)
+                                            <br />
+                                        }
+                                        @item.Telefone01.Replace("_", "")
+                                        @if (!string.IsNullOrEmpty(item.Telefone02))
+                                        {
+                                            <br />@item.Telefone02.Replace("_", "")
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ValorEstimadoProjeto)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Vendedor.NomeUsuario)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.StatusAtendimento.Descricao)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.StatusPlanta)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DataCadastro)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DataPrimeiroContato)
+                                    </td>
+                                    <td>
+                                        @if (item.DataProximoContato.HasValue && (item.DataProximoContato.Value < DateTime.Today))
+                                        {
+                                            <span class="text-red">@Html.DisplayFor(modelItem => item.DataProximoContato)</span>
+                                            <i class="fa fa-exclamation-triangle text-red" title="Atrasado"></i>
+                                        }
+                                        else
+                                        {
+                                            @Html.DisplayFor(modelItem => item.DataProximoContato)
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Registrar Contato", "Create", new { idCliente = item.IdCliente }, new { @class = "btn btn-info btn-sm" })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

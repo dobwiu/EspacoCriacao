@@ -248,6 +248,7 @@
     <Compile Include="ViewModels\DashboardInfo.cs" />
     <Compile Include="ViewModels\ExportacaoInfo.cs" />
     <Compile Include="ViewModels\ExtratoInfo.cs" />
+    <Compile Include="ViewModels\JobContasInfo.cs" />
     <Compile Include="ViewModels\PrintPedidoInfo.cs" />
     <Compile Include="ViewModels\RelatorioDesempenhoInfo.cs" />
     <Compile Include="ViewModels\RelatorioPerdidosInfo.cs" />
@@ -598,6 +599,8 @@
     <Content Include="Areas\Reports\Views\RelPerdidos\Index.cshtml" />
     <Content Include="Areas\Reports\Views\RelPerdidos\pvRelPerdidos.cshtml" />
     <Content Include="Content\modelos\RelPerdidos.xlsx" />
+    <Content Include="Content\modelos\RelFinanceiro.xlsx" />
+    <Content Include="Areas\Financas\Views\Lancamentos\JobContas.cshtml" />
     <None Include="Properties\PublishProfiles\EspacoCriacao - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />

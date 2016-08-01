@@ -36,5 +36,6 @@ namespace EcWebApp.ViewModels
         public IList<LancamentoInfo> Lancamentos { get; set; }
 
         public IList<LancamentoInfo> LancFuturos { get; set; }
+
     }
 }

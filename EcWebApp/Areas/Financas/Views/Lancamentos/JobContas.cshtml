@@ -1,0 +1,30 @@
+﻿@model IEnumerable<EcWebApp.ViewModels.JobContasInfo>
+
+@{
+    ViewBag.Title = "JobContas";
+    ViewBag.SubTitle = string.Concat(DateTime.Today.ToString("MMM"), " / ", DateTime.Today.Year);
+}
+
+<div class="box box-default">
+    <div class="box-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                    <tr>
+                        <th>Data / Hora</th>
+                        <th>Mensagem</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.DataHora</td>
+                            <td>@item.Mensagem</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
