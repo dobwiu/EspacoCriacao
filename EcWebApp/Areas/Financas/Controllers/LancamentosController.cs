@@ -77,7 +77,7 @@ namespace EcWebApp.Areas.Financas.Controllers
 
         public JsonResult ComboCategorias(EnumTipoLancamento tipo)
         {
-            var itens = db.Categorias.Where(s => s.TipoLancamento == tipo).OrderBy(o => o.Descricao).ToList();
+            var itens = db.Categorias.Where(s => s.TipoLancamento == tipo && s.Ativo).OrderBy(o => o.Descricao).ToList();
             return Json(itens, JsonRequestBehavior.AllowGet);
         }
 
@@ -87,7 +87,8 @@ namespace EcWebApp.Areas.Financas.Controllers
             string descricao = addLancamento.Descricao;
 
             addLancamento.Processado = (bool)(addLancamento.DataProcessamento <= DateTime.Now);
-            addLancamento.DataLancamento = DateTime.Now;
+            addLancamento.DataLancamento = DateTime.Now; addLancamento.IdUsuario = base.IdUsuario;
+
             if (addLancamento.TipoLancamento == EnumTipoLancamento.Debito)
             {
                 addLancamento.Valor *= -1;
@@ -204,7 +205,7 @@ namespace EcWebApp.Areas.Financas.Controllers
             {
                 ExcelWorksheet ws = xls.Workbook.Worksheets["Relatorio"];
                 ws.Cells[03, 02].Value = string.Format("Período: {0} - {1}", extrato.PeriodoDe.ToShortDateString(), extrato.PeriodoAte.ToShortDateString());
-                ws.Cells[03, 05].Value = string.Concat("Data:", DateTime.Now.ToString());
+                ws.Cells[03, 05].Value = string.Concat("Data: ", DateTime.Now.ToString());
 
                 int linha = 6;
                 foreach (var item in extrato.Lancamentos)
@@ -221,7 +222,7 @@ namespace EcWebApp.Areas.Financas.Controllers
                 }
 
                 ws.Cells[linha, 02].Value = "TOTAL";
-                ws.Cells[linha, 05].Value = extrato.Recebimentos;
+                if (extrato.Recebimentos != 0) { ws.Cells[linha, 05].Value = extrato.Recebimentos; }
                 ws.Cells[linha, 06].Value = extrato.Pagamentos;
                 ws.Cells[linha, 02, linha, 06].Style.Font.Bold = true;
                 ws.Cells[linha, 02, linha, 06].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
@@ -252,7 +253,7 @@ namespace EcWebApp.Areas.Financas.Controllers
                 }
 
                 ws.Cells[linha, 02].Value = "TOTAL";
-                ws.Cells[linha, 05].Value = vCredito;
+                if (vCredito != 0) { ws.Cells[linha, 05].Value = vCredito; }
                 ws.Cells[linha, 06].Value = vDebito;
                 ws.Cells[linha, 02, linha, 06].Style.Font.Bold = true;
                 ws.Cells[linha, 02, linha, 06].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;

@@ -44,6 +44,7 @@ namespace EcWebApp.Areas.Financas.Controllers
         {
             PlanoContaInfo conta = new Models.PlanoContaInfo()
             {
+                SaldoAtual = 0,
                 DataAberturaConta = DateTime.Today,
                 IdUsuario = base.IdUsuario,
                 Ativo = true

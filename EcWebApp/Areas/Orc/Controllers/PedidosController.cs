@@ -25,7 +25,7 @@ namespace EcWebApp.Areas.Orc.Controllers
         {
             var pedidoInfoes = db.Pedidos.Include(p => p.Cliente)
                                  .Include(p => p.FormaPagamento).Include(p => p.Vendedor)
-                                 .Where(s => s.Cliente.Interesse != EnumInteresse.SemInteresse)
+                                 .Where(s => s.Cliente.Interesse != EnumInteresse.SemInteresse && s.StatusPedido != EnumStatusPedido.Cancelado)
                                  .OrderByDescending(o => o.NumeroPedido);
 
             ViewBag.IdVendedor = new SelectList(new BLL.Usuario().ListarUsuarioCombo(), "IdUsuario", "NomeUsuario");

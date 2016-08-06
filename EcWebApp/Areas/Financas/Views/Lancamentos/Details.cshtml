@@ -11,7 +11,7 @@
                     <table class="table">
                         <tr>
                             <td>
-                                <h6>Saldo Anterior:</h6>
+                                <h6>Fechamento - Mês Anterior:</h6>
                                 <h5>{{extrato.SaldoAnterior | currency:"R$"}}</h5>
                             </td>
                             <td>
@@ -51,6 +51,7 @@
                             </colgroup>
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>Data</th>
                                     <th>Descrição</th>
                                     <th>Valor</th>
@@ -127,7 +128,8 @@
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>
-                                        <input type="radio" id="TipoLancamento" name="TipoLancamento" class="minimal" value="2" ng-model="novoLanc.TipoD" ng-change="CarregaComboCategoria(2);" />
+                                        <input type="radio" id="TipoLancamento" name="TipoLancamento" value="2"
+                                               ng-model="novoLanc.TipoD" ng-change="CarregaComboCategoria(2);" />
                                         &nbsp;Pagamento
                                     </label>
                                 </div>
@@ -135,7 +137,8 @@
                             <div class="col-sm-9">
                                 <div class="form-group">
                                     <label>
-                                        <input type="radio" id="TipoLancamento" name="TipoLancamento" class="minimal" value="1" ng-model="novoLanc.TipoC" ng-change="CarregaComboCategoria(1);" />
+                                        <input type="radio" id="TipoLancamento" name="TipoLancamento" value="1"
+                                               ng-model="novoLanc.TipoC" ng-change="CarregaComboCategoria(1);" />
                                         &nbsp;Recebimento
                                     </label>
                                 </div>
@@ -143,7 +146,9 @@
                         </div>
                         <div class="form-group">
                             <label for="Categoria">Categoria</label>
-                            <select class="form-control" id="cmbCategoria" name="cmbCategoria" ng-model="novoLanc.IdCategoria" ng-disabled="!novoLanc.TipoD && !novoLanc.TipoC">
+                            <select class="form-control" id="cmbCategoria" name="cmbCategoria"
+                                    ng-model="novoLanc.IdCategoria"
+                                    ng-disabled="!novoLanc.TipoD && !novoLanc.TipoC" required>
                                 <option value="">Selecione..</option>
                                 <option ng-repeat="item in ListaCategorias" ng-value="item.IdCategoria">{{item.Descricao}}</option>
                             </select>
@@ -160,7 +165,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" id="DataProcessamento" class="form-control" />
+                                        <input type="text" id="DataProcessamento" class="form-control" required />
                                     </div>
                                 </div>
                             </div>
@@ -171,7 +176,7 @@
                                         <div class="input-group-addon">
                                             R$
                                         </div>
-                                        <input type="text" class="form-control" ng-model="novoLanc.Valor" />
+                                        <input type="text" class="form-control" ng-model="novoLanc.Valor" required />
                                     </div>
                                 </div>
                             </div>
@@ -181,7 +186,7 @@
                         </div>
                         <div class="row" style="margin-top: -15px">
                             <div class="col-sm-8">
-                                <select class="form-control col-md-3" ng-model="novoLanc.Repeticao">
+                                <select class="form-control col-md-3" ng-model="novoLanc.Repeticao" required>
                                     <option value="">Selecione..</option>
                                     <option value="0" ng-selected="true">Evento Único</option>
                                     <option value="3">Mensal</option>
@@ -190,11 +195,16 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" ng-model="novoLanc.Vezes" ng-disabled="novoLanc.Repeticao !== '3' && novoLanc.Repeticao !== '4'" />
+                                    <input type="number" class="form-control" ng-model="novoLanc.Vezes"
+                                           ng-disabled="novoLanc.Repeticao !== '3' && novoLanc.Repeticao !== '4'"
+                                           ng-required="novoLanc.Repeticao == '3' || novoLanc.Repeticao == '4'" />
                                     <div class="input-group-addon">
                                         Vezes
                                     </div>
                                 </div>
+                                <span class="text-red" ng-show="novoLanc.Vezes.$dirty && novoLanc.Vezes.$error.required">
+                                    Informe a quantidade de repetições
+                                </span>
                             </div>
                         </div>
                         <div class="form-group" style="margin-top: 10px">
@@ -208,7 +218,10 @@
                         <input type="hidden" ng-model="novoLanc.IdConta" ng-init="novoLanc.IdConta = '@ViewBag.IdConta'" />
                         <input type="hidden" ng-model="novoLanc.TipoLancamento" />
                         <input type="hidden" ng-model="novoLanc.DataProcessamento" />
-                        <button type="button" class="btn btn-primary" ng-click="AddLancamento(novoLanc)" title="Salvar Lançamento">Salvar</button>
+                        <button type="button" class="btn btn-primary" title="Salvar Lançamento"
+                                ng-click="AddLancamento(novoLanc)">
+                            Salvar
+                        </button>
                     </div>
                 </form>
             </div>
@@ -263,7 +276,7 @@
 @section scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/angular.min.js"></script>
-    <script src="~/Areas/Financas/Scripts/ngLancamentos.js"></script>
+    <script src="~/Areas/Financas/Scripts/ngLancamentos.js?@DateTime.Now.Ticks"></script>
 
     <!-- page script -->
     <script>

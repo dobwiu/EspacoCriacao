@@ -13,42 +13,131 @@ app.controller("financasCtrl", function ($scope, $http) {
         console.log(data);
     });
 
+    $scope.ValidaLancamento = function (modelo) {
+        if (modelo.TipoD == null && modelo.TipoC == null) {
+            $.notify({
+                message: "Informe o Tipo de Lançamento"
+            }, {
+                type: "danger",
+                delay: 2000,
+                placement: {
+                    from: "bottom",
+                    align: "right"
+                }
+            });
+            return false;
+        }
+        if (modelo.IdCategoria == null) {
+            $.notify({
+                message: "Informe uma Categoria"
+            }, {
+                type: "danger",
+                delay: 2000,
+                placement: {
+                    from: "bottom",
+                    align: "right"
+                }
+            });
+            return false;
+        }
+        if (modelo.Descricao == null) {
+            $.notify({
+                message: "Informe uma Descrição"
+            }, {
+                type: "danger",
+                delay: 2000,
+                placement: {
+                    from: "bottom",
+                    align: "right"
+                }
+            });
+            return false;
+        }
+        if (modelo.DataProcessamento == '') {
+            $.notify({
+                message: "Informe a Data do Lançamento"
+            }, {
+                type: "danger",
+                delay: 2000,
+                placement: {
+                    from: "bottom",
+                    align: "right"
+                }
+            });
+            return false;
+        }
+        if (modelo.Valor == null) {
+            $.notify({
+                message: "Informa o Valor do Lançamento"
+            }, {
+                type: "danger",
+                delay: 2000,
+                placement: {
+                    from: "bottom",
+                    align: "right"
+                }
+            });
+            return false;
+        }
+        if (modelo.Repeticao == null) {
+            $.notify({
+                message: "Informe a Repetição desse Lançamento"
+            }, {
+                type: "danger",
+                delay: 2000,
+                placement: {
+                    from: "bottom",
+                    align: "right"
+                }
+            });
+            return false;
+        }
+        if ((modelo.Repeticao == '3') || (modelo.Repeticao == '4')) {
+            if ((modelo.Vezes == null) || (modelo.Vezes == '0')) {
+                $.notify({
+                    message: "Informe a quantidade de repetições do Lançamento"
+                }, {
+                    type: "danger",
+                    delay: 2000,
+                    placement: {
+                        from: "bottom",
+                        align: "right"
+                    }
+                });
+                return false;
+            }
+        }
+        //-- Lançamento OK -->
+        return true;
+    }
+
     //chama o método IncluirLancamento do controlador
     $scope.AddLancamento = function (lancamento) {
         lancamento.IdConta = $("#IdConta").val();
         lancamento.TipoLancamento = $("#TipoLancamento:checked").val();
         lancamento.DataProcessamento = $("#DataProcessamento").val();
-        $http.post('/Financas/Lancamentos/AddLancamento/', { addLancamento: lancamento })
-        .success(function (result) {
-            $scope.extrato = result;
-            delete $scope.novoLanc;
-            $("#DataProcessamento").val('');
-            $.notify({
-                message: "Registro salvo com sucesso"
-            }, {
-                type: "success",
-                delay: 1000,
-                placement: {
-                    from: "bottom",
-                    align: "right"
+        if ($scope.ValidaLancamento(lancamento)) {
+            $http.post('/Financas/Lancamentos/AddLancamento/', { addLancamento: lancamento })
+            .success(function (result) {
+                $scope.extrato = result;
+                delete $scope.novoLanc;
+                $("#DataProcessamento").val('');
+                $.notify({
+                    message: "Registro salvo com sucesso"
+                }, {
+                    type: "success",
+                    delay: 1000,
+                    placement: {
+                        from: "bottom",
+                        align: "right"
+                    }
                 }
-            }
-            );
-        })
-        .error(function (data) {
-            console.log(data);
-            $.notify({
-                message: data
-            }, {
-                type: "danger",
-                delay: 7500,
-                placement: {
-                    from: "bottom",
-                    align: "right"
-                }
-            }
-            );
-        });
+                );
+            })
+            .error(function (data) {
+                console.log(data);
+            });
+        }
     }
 
     //chama o método ExcluirLancamento do controlador
@@ -71,17 +160,6 @@ app.controller("financasCtrl", function ($scope, $http) {
         })
         .error(function (data) {
             console.log(data);
-            $.notify({
-                message: data
-            }, {
-                type: "danger",
-                delay: 7500,
-                placement: {
-                    from: "bottom",
-                    align: "right"
-                }
-            }
-            );
         });
     }
 
