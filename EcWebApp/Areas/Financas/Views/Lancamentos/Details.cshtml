@@ -8,26 +8,28 @@
         <div class="col-md-7">
             <div class="box box-primary">
                 <div class="box-body">
-                    <table class="table">
-                        <tr>
-                            <td>
-                                <h6>Fechamento - Mês Anterior:</h6>
-                                <h5>{{extrato.SaldoAnterior | currency:"R$"}}</h5>
-                            </td>
-                            <td>
-                                <h6>Recebimentos:</h6>
-                                <h5 class="text-green">{{extrato.Recebimentos | currency:"R$"}}</h5>
-                            </td>
-                            <td>
-                                <h6>Pagamentos:</h6>
-                                <h5 class="text-red">{{extrato.Pagamentos | currency:"R$"}}</h5>
-                            </td>
-                            <td>
-                                <h6>Saldo Atual:</h6>
-                                <h5>{{extrato.SaldoAtual | currency:"R$"}}</h5>
-                            </td>
-                        </tr>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                                <td>
+                                    <h6>Fechamento - Mês Anterior:</h6>
+                                    <h5>{{extrato.SaldoAnterior | currency:"R$"}}</h5>
+                                </td>
+                                <td>
+                                    <h6>Recebimentos:</h6>
+                                    <h5 class="text-green">{{extrato.Recebimentos | currency:"R$"}}</h5>
+                                </td>
+                                <td>
+                                    <h6>Pagamentos:</h6>
+                                    <h5 class="text-red">{{extrato.Pagamentos | currency:"R$"}}</h5>
+                                </td>
+                                <td>
+                                    <h6>Saldo Atual:</h6>
+                                    <h5>{{extrato.SaldoAtual | currency:"R$"}}</h5>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
                 <div class="box-footer">
                     <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#mdlExportacao"><i class="glyphicon glyphicon-file"></i> Exportar</button>
@@ -67,7 +69,7 @@
                                     <td>{{item.DataFormatada}}</td>
                                     <td>
                                         <span style="font-size:10px">{{item.Categoria.Descricao}}</span><br />
-                                        {{item.Descricao}}
+                                        {{item.Descricao}} <span ng-show="{{item.Comentario !== null}}"><i class="fa fa-info-circle" title="{{item.Comentario}}"></i></span>
                                     </td>
                                     <td style="text-align: right"><span class="{{item.ClasseCSS}}">{{item.Valor | currency:"R$"}}</span></td>
                                 </tr>
@@ -101,7 +103,7 @@
                                     <td>{{item.DataFormatada}}</td>
                                     <td>
                                         <span style="font-size:10px">{{item.Categoria.Descricao}}</span><br />
-                                        {{item.Descricao}}
+                                        {{item.Descricao}} <span ng-show="{{item.Comentario !== null}}"><i class="fa fa-info-circle" title="{{item.Comentario}}"></i></span>
                                     </td>
                                     <td style="text-align: right"><span class="{{item.ClasseCSS}}">{{item.Valor | currency:"R$"}}</span></td>
                                 </tr>
@@ -209,7 +211,7 @@
                         </div>
                         <div class="form-group" style="margin-top: 10px">
                             <label for="Comentario">Observação</label>
-                            <input type="text" class="form-control" ng-model="novoLanc.Comentario" />
+                            <input type="text" class="form-control" ng-model="novoLanc.Comentario" ng-maxlength="100" />
                         </div>
                     </div>
                     <!-- /.box-body -->

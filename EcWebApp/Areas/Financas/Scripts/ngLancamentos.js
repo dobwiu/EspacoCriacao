@@ -142,24 +142,32 @@ app.controller("financasCtrl", function ($scope, $http) {
 
     //chama o método ExcluirLancamento do controlador
     $scope.DelLancamento = function (lancamento) {
-        $http.post('/Financas/Lancamentos/DelLancamento/', { delLancamento: lancamento })
-        .success(function (result) {
-            $scope.extrato = result;
-            $("#DataProcessamento").val('');
-            $.notify({
-                message: "Registro excluído com sucesso"
-            }, {
-                type: "success",
-                delay: 1000,
-                placement: {
-                    from: "bottom",
-                    align: "right"
+        bootbox.confirm({
+            size: 'small',
+            message: 'Deseja excluir esse lançamento ??',
+            callback: function (answer) {
+                if (answer) {
+                    $http.post('/Financas/Lancamentos/DelLancamento/', { delLancamento: lancamento })
+                    .success(function (result) {
+                        $scope.extrato = result;
+                        $("#DataProcessamento").val('');
+                        $.notify({
+                            message: "Registro excluído com sucesso"
+                        }, {
+                            type: "success",
+                            delay: 1000,
+                            placement: {
+                                from: "bottom",
+                                align: "right"
+                            }
+                        }
+                        );
+                    })
+                    .error(function (data) {
+                        console.log(data);
+                    });
                 }
             }
-            );
-        })
-        .error(function (data) {
-            console.log(data);
         });
     }
 

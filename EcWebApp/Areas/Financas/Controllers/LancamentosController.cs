@@ -46,6 +46,7 @@ namespace EcWebApp.Areas.Financas.Controllers
             DateTime inicioMes = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 01);
             DateTime finalMes = inicioMes.AddMonths(1);
             DateTime finalPeriodo = finalMes.AddMonths(2).AddDays(15);
+            DateTime ontem = DateTime.Today.AddDays(-1);
 
             var conta = db.Contas.Find(idConta);
             var lancamentos = db.Lancamentos.Include(i => i.Categoria)
@@ -65,7 +66,7 @@ namespace EcWebApp.Areas.Financas.Controllers
             extrato.Lancamentos = lancamentos.Where(s => s.DataProcessamento <= DateTime.Now && s.Processado).OrderBy(o => o.DataProcessamento).ToList();
             extrato.Recebimentos = lancamentos.Where(s => s.TipoLancamento == EnumTipoLancamento.Credito && s.Processado).Sum(v => v.Valor);
             extrato.Pagamentos = lancamentos.Where(s => s.TipoLancamento == EnumTipoLancamento.Debito && s.Processado).Sum(v => v.Valor);
-            extrato.LancFuturos = lancamentos.Where(s => s.DataProcessamento >= DateTime.Now && !s.Processado).ToList();
+            extrato.LancFuturos = lancamentos.Where(s => s.DataProcessamento >= ontem && !s.Processado).ToList();
 
             return extrato;
         }
@@ -213,6 +214,8 @@ namespace EcWebApp.Areas.Financas.Controllers
                     ws.Cells[linha, 02].Value = item.DataProcessamento.ToShortDateString();
                     ws.Cells[linha, 03].Value = item.Categoria.Descricao;
                     ws.Cells[linha, 04].Value = item.Descricao;
+                    ws.Cells[linha, 07].Value = item.Comentario;
+
                     if (item.TipoLancamento == EnumTipoLancamento.Credito)
                         ws.Cells[linha, 05].Value = item.Valor;
                     else
@@ -224,15 +227,15 @@ namespace EcWebApp.Areas.Financas.Controllers
                 ws.Cells[linha, 02].Value = "TOTAL";
                 if (extrato.Recebimentos != 0) { ws.Cells[linha, 05].Value = extrato.Recebimentos; }
                 ws.Cells[linha, 06].Value = extrato.Pagamentos;
-                ws.Cells[linha, 02, linha, 06].Style.Font.Bold = true;
-                ws.Cells[linha, 02, linha, 06].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
-                ws.Cells[linha, 02, linha, 06].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
+                ws.Cells[linha, 02, linha, 07].Style.Font.Bold = true;
+                ws.Cells[linha, 02, linha, 07].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                ws.Cells[linha, 02, linha, 07].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
                 linha = linha + 2;
 
                 ws.Cells[linha, 02].Value = "LANÇAMENTOS FUTUROS";
-                ws.Cells[linha, 02, linha, 06].Merge = true;
+                ws.Cells[linha, 02, linha, 07].Merge = true;
                 ws.Cells[linha, 02].Style.Font.Bold = true; linha++;
-                ws.Cells[05, 02, 05, 06].Copy(ws.Cells[linha, 02, linha, 06]); linha++;
+                ws.Cells[05, 02, 05, 07].Copy(ws.Cells[linha, 02, linha, 07]); linha++;
 
                 decimal vCredito = 0; decimal vDebito = 0;
                 foreach (var item in extrato.LancFuturos)
@@ -240,6 +243,8 @@ namespace EcWebApp.Areas.Financas.Controllers
                     ws.Cells[linha, 02].Value = item.DataProcessamento.ToShortDateString();
                     ws.Cells[linha, 03].Value = item.Categoria.Descricao;
                     ws.Cells[linha, 04].Value = item.Descricao;
+                    ws.Cells[linha, 07].Value = item.Comentario;
+
                     if (item.TipoLancamento == EnumTipoLancamento.Credito)
                     {
                         ws.Cells[linha, 05].Value = item.Valor; vCredito += item.Valor;
@@ -255,9 +260,9 @@ namespace EcWebApp.Areas.Financas.Controllers
                 ws.Cells[linha, 02].Value = "TOTAL";
                 if (vCredito != 0) { ws.Cells[linha, 05].Value = vCredito; }
                 ws.Cells[linha, 06].Value = vDebito;
-                ws.Cells[linha, 02, linha, 06].Style.Font.Bold = true;
-                ws.Cells[linha, 02, linha, 06].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
-                ws.Cells[linha, 02, linha, 06].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
+                ws.Cells[linha, 02, linha, 07].Style.Font.Bold = true;
+                ws.Cells[linha, 02, linha, 07].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                ws.Cells[linha, 02, linha, 07].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
 
                 return File(xls.GetAsByteArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Financeiro.xlsx");
             }
