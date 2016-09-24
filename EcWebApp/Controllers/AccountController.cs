@@ -36,6 +36,9 @@ namespace EcWebApp.Controllers
                     FormsAuthentication.SetAuthCookie(usuario.IdUsuario.ToString(), pessoa.RememberMe);
                     this.CriaCookieUsuario(usuario);
 
+                    // TODO: Criar job para automaticar processamento de contas.
+                    if (usuario.IdUsuario != Guid.Empty) { new BLL.Conta().ProcessaContas(); }
+
                     if (string.IsNullOrEmpty(ReturnUrl))
                     {
                         return Redirect("~/");

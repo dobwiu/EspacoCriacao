@@ -149,6 +149,7 @@
     <Compile Include="Areas\Reports\Controllers\RelPerdidos.cs" />
     <Compile Include="Areas\Reports\Controllers\RelDesempenhoController.cs" />
     <Compile Include="Areas\Reports\ReportsAreaRegistration.cs" />
+    <Compile Include="BLL\Conta.cs" />
     <Compile Include="BLL\Pedido.cs" />
     <Compile Include="BLL\Usuario.cs" />
     <Compile Include="Controllers\AccountController.cs" />
